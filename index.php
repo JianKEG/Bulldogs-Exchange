@@ -7,7 +7,7 @@
     <title>Login Page</title>
 </head>
 <body>
-    <h1 class="text-3xl font-bold underline">WELCOME TO BULLDOGS EXCHANGE!</h1>
+    <h1 class="text-3xl font-bold underline">WELCOME TO BULLDOGS EXCHANGE!!</h1>
 
     <?php if (isset($_SESSION['message'])): ?>
         <div style="color: #b91c1c;">
