@@ -15,7 +15,7 @@
         <link href="../../src/output.css" rel="stylesheet">
     </head>
 
-    <body class="bg-white font-sans antialiased text-zinc-900 p-6">
+    <body class="bg-white font-sans antialiased text-zinc-900">
 
         <h2 class="text-2xl font-bold mb-6 pl-2 tracking-tight">Uniforms</h2>
 
