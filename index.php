@@ -19,9 +19,9 @@
     <?php endif; ?>
 
     <form id="formLogin" action="actions/login.php" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <input type="submit" name="loginBtn" value="Login">
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="password">
+        <input type="submit" name="loginBtn" value="Login">
     </form>
 </body> 
 </html>

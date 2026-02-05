@@ -4,7 +4,7 @@
     }
 
     $page_title = "Home";
-    include ('../../includes/student/header.html');
+    include ('../../includes/admin/header.html');
 ?> 
 
 <!DOCTYPE html>

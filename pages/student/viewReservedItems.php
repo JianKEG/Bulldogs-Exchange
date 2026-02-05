@@ -33,6 +33,8 @@
     }
 ?>
 
+<?php include ('../../includes/student/header.html'); ?>
+
 <!DOCTYPE html>
 <html>
     <head>
