@@ -5,6 +5,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require '../../config/accessController.php';
 
-header("Location: ../../pages/admin/products.php");
+header("Location: ../../pages/admin/editProduct.php");
 exit();
 ?>
