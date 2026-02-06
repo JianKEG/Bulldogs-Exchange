@@ -3,20 +3,21 @@
         session_start();
     }
 
+    require '../../config/accessController.php';
     require '../../config/connection.php';
     error_reporting(E_ERROR | E_PARSE);
     $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
     $display = "SELECT 
-                    p.product_id, 
-                    p.product_name, 
-                    p.category, 
-                    p.price,
-                    ps.size, 
-                    ps.stock_quantity
-                  FROM product p
-                  LEFT JOIN product_sizestock ps ON p.product_id = ps.product_id
-                  ORDER BY p.product_id, ps.size";
+                product.product_id, 
+                product.product_name, 
+                product.category, 
+                product.price,
+                product_sizestock.size, 
+                product_sizestock.stock_quantity
+                FROM product
+                LEFT JOIN product_sizestock ON product.product_id = product_sizestock.product_id
+                ORDER BY product.product_id, product_sizestock.size";
     
     $query = mysqli_query($connection, $display);
     
