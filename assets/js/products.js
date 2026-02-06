@@ -36,3 +36,16 @@ function deleteProduct(productId) {
     const url = `../../actions/admin/deleteProduct.php?id=${productId}&size=${selectedSize}`;
     window.location.href = url;
 }
+
+function editProduct(productId) {
+    const selectSize = document.getElementById('size-select-' + productId);
+    const selectedSize = selectSize.value;
+    
+    if (!selectedSize) {
+        alert("Select a size to edit the product.");
+        return;
+    }
+    
+    const url = `../../actions/admin/editProduct.php?id=${productId}&size=${selectedSize}`;
+    window.location.href = url;
+}
