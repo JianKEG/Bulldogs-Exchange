@@ -3,24 +3,25 @@ USE BulldogsExchangeStore;
 
 CREATE TABLE Student_Log(
 	id INT PRIMARY KEY auto_increment,
-    username VARCHAR(100) unique,
-    password VARCHAR(100)
+    username VARCHAR(255) unique,
+    password VARCHAR(255)
 );
 
 CREATE TABLE Student (
     student_id INT PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100),
-    course VARCHAR(100),
+    name VARCHAR(255),
+    email VARCHAR(255),
+    course VARCHAR(255),
     year_level VARCHAR(20),
     FOREIGN KEY(student_id) REFERENCES Student_Log(id)
 );
 
 CREATE TABLE Product (
-    product_id INT PRIMARY KEY,
-    product_name VARCHAR(100),
-    category VARCHAR(50),
-    price DECIMAL(10,2)
+    product_id INT PRIMARY KEY auto_increment,
+    product_name VARCHAR(255),
+    category VARCHAR(255),
+    price DECIMAL(10,2),
+    image VARCHAR(255)
 );
 
 CREATE TABLE Product_SizeStock (
@@ -48,23 +49,18 @@ CREATE TABLE Reservation (
     FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
 
-/* sineparate ko yung size and stocks sa product table kasi different size = different stock. gets ba gets ba
+/* sineparate ko yung size and stocks sa product table kasi different size = different stock. gets ba gets ba*/
 
-tinanggal ko yung id sa product_sizestock kasi hindi naman siya kailangan, pwede naman natin i-identify yung size at stock gamit yung product_id at size.
-
-tapos yung auto_increment sa product_id tinanggal ko kasi nakakabobo pag nagdedelete di narereset yung increment.
-*/
-
-INSERT INTO Product(product_id, product_name, category, price) value
-(1, "NSTP Uniform", "Uniform", 350);
+INSERT INTO Product(product_name, category, price) value
+("NSTP Uniform", "Uniform", 350);
 
 INSERT INTO product_sizestock(product_id, size, stock_quantity) value
 ("1", "S", "12"),
 ("1", "M", "6"),
 ("1", "L", "7");
 
-INSERT INTO Product(product_id, product_name, category, price) value
-(2, "PE Uniform", "Uniform", 450);
+INSERT INTO Product(product_name, category, price) value
+("PE Uniform", "Uniform", 450);
 
 INSERT INTO product_sizestock(product_id, size, stock_quantity) value
 ("2", "S", "12"),
@@ -88,6 +84,7 @@ product_sizestock.size,
 product_sizestock.stock_quantity
 FROM product
 LEFT JOIN product_sizestock ON product.product_id = product_sizestock.product_id
-ORDER BY product.product_id, product_sizestock.size;
+WHERE product_sizestock.size = "S" and product.product_id = 1
+ORDER BY product.product_id;
 
 delete from product_sizestock where product_id = 1 and size = "S";

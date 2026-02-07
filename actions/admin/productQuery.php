@@ -20,6 +20,11 @@
                 ORDER BY product.product_id, product_sizestock.size";
     
     $query = mysqli_query($connection, $display);
+
+    if(mysqli_num_rows($query) === 0) {
+        $reset_autoincrement = "ALTER TABLE product AUTO_INCREMENT = 1";
+        mysqli_query($connection, $reset_autoincrement);
+    }
     
     $products = [];
     while($row = mysqli_fetch_assoc($query)) {
