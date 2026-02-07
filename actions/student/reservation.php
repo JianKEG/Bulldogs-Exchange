@@ -2,8 +2,8 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 require '../../config/accessController.php';
 require '../../config/connection.php';
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($conn->connect_error) { header("Location: ../../pages/student/viewReservedItems.php"); exit(); }
+$connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+if ($connection->connect_error) { header("Location: ../../pages/student/viewReservedItems.php"); exit(); }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_SESSION['cart'])) { header("Location: ../../pages/student/viewReservedItems.php"); exit(); }
     $user_id = $_SESSION['id'];
