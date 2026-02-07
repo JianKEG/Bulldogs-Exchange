@@ -46,7 +46,7 @@
                     <h1 class="text-3xl font-bold text-gray-800 text-center">Edit Product</h1>
                 </div>
 
-                <div class="space-y-4 inline-block bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto px-5 py-5">
+                <div class="space-y-4 inline-block bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto px-5 pt-5">
                     <form action="../../actions/admin/editProduct.php?id=<?php echo $_GET['id']; ?>&size=<?php echo $_GET['size']; ?>" method="POST" class="space-y-4">
                         <?php while($row = mysqli_fetch_array($sql)){ ?>
                         <label class="block text-left text-sm font-medium text-gray-700">Product Name</label>
@@ -63,8 +63,15 @@
                         
                         <label class="block text-left text-sm font-medium text-gray-700">Stock Quantity</label>
                         <input type="number" name="stock_quantity" value="<?php echo $row['stock_quantity']; ?>" placeholder="Stock Quantity" class="w-full rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
+
+                        <button type="button" onclick="window.location.href='../../pages/admin/products.php'" class="inline-flex items-center rounded-lg mt-2 bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition cursor-pointer">
+                            Cancel
+                        </button>
+
                         <button type="submit" name="updateForm" class="inline-flex items-center rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 transition cursor-pointer">
                             Save Changes
+                        </button>
+          
                           <?php } ?>
                     </form>
                 </div>
