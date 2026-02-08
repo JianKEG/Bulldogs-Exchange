@@ -98,7 +98,7 @@
                 <div class="actions">
                     <a href="uniform.php" class="btn btn-more">Reserve More Items</a>
                     
-                    <form action="#" method="POST">
+                    <form action="../../actions/student/reservation.php" method="POST">
                         <button type="submit" class="btn btn-finalize">Finalize Reservation</button>
                     </form>
                 </div>
