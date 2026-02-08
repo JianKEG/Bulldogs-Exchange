@@ -58,6 +58,23 @@
     <body class="bg-white font-sans antialiased text-zinc-900">
         <div class="cart-container">
             <h2>Your Reservation List</h2>
+            
+            <?php if (isset($_SESSION['message'])): ?>
+                <div style="padding: 15px; margin-bottom: 20px; border-radius: 5px; 
+                    <?php 
+                    if (strpos($_SESSION['message'], 'successfully') !== false) {
+                        echo 'background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;';
+                    } else {
+                        echo 'background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;';
+                    }
+                    ?>">
+                    <?php 
+                    echo htmlspecialchars($_SESSION['message']); 
+                    unset($_SESSION['message']);
+                    ?>
+                </div>
+            <?php endif; ?>
+            
             <?php if (!empty($_SESSION['cart'])): ?>
                 <table>
                     <thead>
@@ -98,7 +115,7 @@
                 <div class="actions">
                     <a href="uniform.php" class="btn btn-more">Reserve More Items</a>
                     
-                    <form action="#" method="POST">
+                    <form action="../../actions/student/reservation.php" method="POST">
                         <button type="submit" class="btn btn-finalize">Finalize Reservation</button>
                     </form>
                 </div>
