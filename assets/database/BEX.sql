@@ -8,12 +8,13 @@ CREATE TABLE Student_Log(
 );
 
 CREATE TABLE Student (
-    student_id INT PRIMARY KEY,
+    student_id INT PRIMARY KEY, /* eto dapat yung student id na mismo ng student like 2024-1022967 */
     name VARCHAR(255),
     email VARCHAR(255),
     course VARCHAR(255),
     year_level VARCHAR(20),
-    FOREIGN KEY(student_id) REFERENCES Student_Log(id)
+    s_id int, /*eto yung irereference sa id ng student_log*/
+    FOREIGN KEY(s_id) REFERENCES Student_Log(id)
 );
 
 CREATE TABLE Product (
@@ -88,3 +89,15 @@ WHERE product_sizestock.size = "S" and product.product_id = 1
 ORDER BY product.product_id;
 
 delete from product_sizestock where product_id = 1 and size = "S";
+
+SELECT 
+                product.product_id, 
+                product.product_name, 
+                product.category, 
+                product.price,
+                GROUP_CONCAT(product_sizestock.size ORDER BY product_sizestock.size SEPARATOR '|') AS sizes,
+                GROUP_CONCAT(product_sizestock.stock_quantity ORDER BY product_sizestock.size SEPARATOR '|') AS stocks
+                FROM product
+                LEFT JOIN product_sizestock ON product.product_id = product_sizestock.product_id
+                GROUP BY product.product_id, product.product_name, product.category, product.price
+                ORDER BY product.product_id
