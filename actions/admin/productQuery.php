@@ -13,37 +13,17 @@
                 product.product_name, 
                 product.category, 
                 product.price,
-                product_sizestock.size, 
-                product_sizestock.stock_quantity
+                GROUP_CONCAT(product_sizestock.size ORDER BY product_sizestock.size SEPARATOR '|') AS sizes,
+                GROUP_CONCAT(product_sizestock.stock_quantity ORDER BY product_sizestock.size SEPARATOR '|') AS stocks
                 FROM product
                 LEFT JOIN product_sizestock ON product.product_id = product_sizestock.product_id
-                ORDER BY product.product_id, product_sizestock.size";
+                GROUP BY product.product_id, product.product_name, product.category, product.price
+                ORDER BY product.product_id";
     
-    $query = mysqli_query($connection, $display);
+    $result = mysqli_query($connection, $display);
 
-    if(mysqli_num_rows($query) === 0) {
+    if(mysqli_num_rows($result) === 0) {
         $reset_autoincrement = "ALTER TABLE product AUTO_INCREMENT = 1";
         mysqli_query($connection, $reset_autoincrement);
-    }
-    
-    $products = [];
-    while($row = mysqli_fetch_assoc($query)) {
-        $product_id = $row['product_id'];
-        if (!isset($products[$product_id])) {
-            $products[$product_id] = [
-                'product_id' => $row['product_id'],
-                'product_name' => $row['product_name'],
-                'category' => $row['category'],
-                'price' => $row['price'],
-                'sizes' => []
-            ];
-        }
-        
-        if ($row['size'] !== null) {
-            $products[$product_id]['sizes'][] = [
-                'size' => $row['size'],
-                'stock_quantity' => $row['stock_quantity']
-            ];
-        }
     }
 ?>
