@@ -43,6 +43,7 @@ CREATE TABLE Reservation (
     reservation_id INT PRIMARY KEY auto_increment,
     student_id VARCHAR(255),
     product_id INT,
+    size varchar(5),
     quantity INT,
     reservation_date DATE,
     status VARCHAR(50),
@@ -100,5 +101,4 @@ GROUP_CONCAT(product_sizestock.stock_quantity ORDER BY product_sizestock.size SE
 FROM product
 LEFT JOIN product_sizestock ON product.product_id = product_sizestock.product_id
 GROUP BY product.product_id, product.product_name, product.category, product.price
-ORDER BY product.product_id
-
+ORDER BY product.product_id;
