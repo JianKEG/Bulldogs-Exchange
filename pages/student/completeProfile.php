@@ -5,8 +5,22 @@
     
     $page_title = "Complete Profile";
     require '../../config/accessController.php';
+    require_once '../../config/connection.php';
     
-    $student_id = $_SESSION['id'];
+    $login_id = $_SESSION['id'];
+    
+    // Check if profile already exists for this login account
+    $sql_check = "SELECT student_id FROM Student WHERE s_id = ?";
+    $stmt_check = $connection->prepare($sql_check);
+    $stmt_check->bind_param('i', $login_id);
+    $stmt_check->execute();
+    $result_check = $stmt_check->get_result();
+    
+    if ($result_check->num_rows > 0) {
+        // Profile already exists, redirect to reservations
+        header('Location: ../../pages/student/viewReservedItems.php');
+        exit();
+    }
 ?>
 
 <?php include ('../../includes/student/header.html'); ?>
@@ -62,6 +76,12 @@
                 <label for="email">Email Address *</label>
                 <input type="email" id="email" name="email" required>
                 <div class="error" id="emailError">Please enter a valid email address</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="student_id">Student ID (Year-Student ID) *</label>
+                <input type="text" id="student_id" name="student_id" placeholder="2024-1022967" required>
+                <div class="error" id="studentIdError">Please enter a valid student ID (YYYY-NNNNNNN)</div>
             </div>
             
             <div class="form-group">
@@ -122,6 +142,14 @@
                 isValid = false;
             }
             
+            // Validate Student ID
+            const studentId = document.getElementById('student_id').value.trim();
+            const studentIdPattern = /^\d{4}-\d{7}$/;
+            if (!studentIdPattern.test(studentId)) {
+                document.getElementById('studentIdError').style.display = 'block';
+                isValid = false;
+            }
+            
             // Validate Course
             const course = document.getElementById('course').value;
             if (course === '') {
@@ -155,6 +183,15 @@
                 document.getElementById('emailError').style.display = 'block';
             } else {
                 document.getElementById('emailError').style.display = 'none';
+            }
+        });
+        
+        document.getElementById('student_id').addEventListener('blur', function() {
+            const studentIdPattern = /^\d{4}-\d{7}$/;
+            if (!studentIdPattern.test(this.value.trim())) {
+                document.getElementById('studentIdError').style.display = 'block';
+            } else {
+                document.getElementById('studentIdError').style.display = 'none';
             }
         });
     </script>
