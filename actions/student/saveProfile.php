@@ -11,11 +11,12 @@
         exit();
     }
     
-    $student_id = $_SESSION['id'];
+    $login_id = $_SESSION['id'];
     
     // Retrieve and sanitize inputs
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
+    $student_id = trim($_POST['student_id']);
     $course = trim($_POST['course']);
     $year_level = trim($_POST['year_level']);
     
@@ -37,6 +38,11 @@
         $errors[] = "Email address is too long (max 255 characters).";
     }
     
+    // Validate student ID format (YYYY-NNNNNNN)
+    if (!preg_match("/^\d{4}-\d{7}$/", $student_id)) {
+        $errors[] = "Invalid student ID format. Use YYYY-NNNNNNN.";
+    }
+    
     // Validate course
     $valid_courses = [
         'BS Computer Science', 'BS Information Technology', 'BS Business Administration',
@@ -53,10 +59,10 @@
         $errors[] = "Please select a valid year level.";
     }
     
-    // Check if student_id already exists in Student table
-    $sql_check = "SELECT student_id FROM Student WHERE student_id = ?";
+    // Check if profile already exists for this login account
+    $sql_check = "SELECT student_id FROM Student WHERE s_id = ?";
     $stmt_check = $connection->prepare($sql_check);
-    $stmt_check->bind_param('i', $student_id);
+    $stmt_check->bind_param('i', $login_id);
     $stmt_check->execute();
     $result_check = $stmt_check->get_result();
     
@@ -64,10 +70,21 @@
         $errors[] = "Profile already exists. Please contact administrator if you need to update your information.";
     }
     
+    // Check if this student_id already exists
+    $sql_check_student_id = "SELECT student_id FROM Student WHERE student_id = ?";
+    $stmt_check_student_id = $connection->prepare($sql_check_student_id);
+    $stmt_check_student_id->bind_param('s', $student_id);
+    $stmt_check_student_id->execute();
+    $result_check_student_id = $stmt_check_student_id->get_result();
+
+    if ($result_check_student_id->num_rows > 0) {
+        $errors[] = "This student ID is already registered.";
+    }
+    
     // Check if email already exists for different student
     $sql_check_email = "SELECT student_id FROM Student WHERE email = ? AND student_id != ?";
     $stmt_check_email = $connection->prepare($sql_check_email);
-    $stmt_check_email->bind_param('si', $email, $student_id);
+    $stmt_check_email->bind_param('ss', $email, $student_id);
     $stmt_check_email->execute();
     $result_check_email = $stmt_check_email->get_result();
     
@@ -84,14 +101,14 @@
     
     // Insert student details into Student table
     try {
-        $sql_insert = "INSERT INTO Student (student_id, name, email, course, year_level) VALUES (?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO Student (student_id, name, email, course, year_level, s_id) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_insert = $connection->prepare($sql_insert);
         
         if (!$stmt_insert) {
             throw new Exception("Database prepare error: " . $connection->error);
         }
         
-        $stmt_insert->bind_param('issss', $student_id, $name, $email, $course, $year_level);
+        $stmt_insert->bind_param('sssssi', $student_id, $name, $email, $course, $year_level, $login_id);
         
         if ($stmt_insert->execute()) {
             $_SESSION['message'] = "Profile completed successfully! You can now make reservations.";
