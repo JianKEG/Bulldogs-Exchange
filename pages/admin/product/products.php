@@ -4,9 +4,9 @@
     }
     
     $page_title = "Products";
-    include('../../includes/admin/header.html');
+    include('../../../includes/admin/header.html');
 
-    require '../../actions/admin/productQuery.php';
+    require '../../../actions/admin/product/productQuery.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,12 +14,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../src/output.css">
+    <link rel="stylesheet" href="../../../src/output.css">
     <title><?php echo $page_title; ?></title>
 </head>
     <body>
          <div class="flex">
-            <?php include('../../includes/admin/sidebar.html'); ?>
+            <?php include('../../../includes/admin/sidebar.html'); ?>
             
             <main id="main-content" class="flex-1 p-8 bg-gray-50 text-center">
                 <div class="mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
@@ -28,7 +28,7 @@
 
                 <div class="space-y-4">
                     <div class="ml-155">
-                        <a href="../../pages/admin/addProduct.php" class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 pl-2 text-sm font-medium text-white hover:bg-blue-700 transition">
+                        <a href="../../../pages/admin/product/addProduct.php" class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 pl-2 text-sm font-medium text-white hover:bg-blue-700 transition">
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Add_Plus"> <path id="Vector" d="M6 12H12M12 12H18M12 12V18M12 12V6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
                             Add Product
                         </a>
@@ -93,6 +93,6 @@
                 </div>                                    
             </main>
         </div>
-    <script src="../../assets/js/products.js"></script>
+    <script src="../../../assets/js/products.js"></script>
     </body>
 </html>

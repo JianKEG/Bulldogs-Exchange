@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="space-y-4 inline-block bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto px-5 pt-5">
-                    <form action="../../actions/admin/editProduct.php?id=<?php echo $_GET['id']; ?>&size=<?php echo $_GET['size']; ?>" method="POST" class="space-y-4">
+                    <form action="../../actions/admin/product/editProduct.php?id=<?php echo $_GET['id']; ?>&size=<?php echo $_GET['size']; ?>" method="POST" class="space-y-4">
                         <?php while($row = mysqli_fetch_array($sql)){ ?>
                         <label class="block text-left text-sm font-medium text-gray-700">Product Name</label>
                         <input type="text" name="product_name" value="<?php echo $row['product_name']; ?>" placeholder="Product Name" class="w-full rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200">

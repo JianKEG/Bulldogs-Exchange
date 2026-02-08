@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="space-y-4 inline-block bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto px-5 pt-5">
-                    <form action="../../actions/admin/addProduct.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    <form action="../../actions/admin/product/addProduct.php" method="POST" enctype="multipart/form-data" class="space-y-4">
                         <p class="block text-left text-sm font-medium text-gray-700">Product Image</p>
                         <div class="flex flex-wrap items-center gap-3 mt-2">
                             <input id="imageInput" accept="image/*" type="file" name="product_image" hidden>
