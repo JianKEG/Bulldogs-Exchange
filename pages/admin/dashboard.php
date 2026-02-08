@@ -30,7 +30,7 @@
 
                 <div class="mb-6">
                     <h1 class="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
-                    <p class="text-gray-600 mt-2">hi faggots</p>
+                    <p class="text-gray-600 mt-2">mga metrics dito</p>
                 </div>
             </main>
         </div>
