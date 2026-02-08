@@ -4,7 +4,7 @@
     }
     
     $page_title = "Edit Products";
-    include('../../includes/admin/header.html');
+    include('../../includes/admin/product/header.html');
 
     require_once '../../config/connection.php';
     error_reporting(E_ERROR | E_PARSE);
@@ -39,7 +39,7 @@
 
     <body>
         <div class="flex">
-            <?php include('../../includes/admin/sidebar.html'); ?>
+            <?php include('../../includes/admin/product/sidebar.html'); ?>
 
             <main id="main-content" class="flex-1 p-8 bg-gray-50 text-center">
                 <div class="mb-6 flex items-center justify-center">

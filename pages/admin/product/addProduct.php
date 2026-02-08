@@ -4,7 +4,7 @@
     }
     
     $page_title = "Add Products";
-    include('../../includes/admin/header.html');
+    include('../../../includes/admin/product/header.html');
 ?>
 
 
@@ -13,13 +13,13 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../../src/output.css">
+        <link rel="stylesheet" href="../../../src/output.css">
         <title><?php echo $page_title; ?></title>
     </head>
 
     <body>
         <div class="flex">
-            <?php include('../../includes/admin/sidebar.html'); ?>
+            <?php include('../../../includes/admin/product/sidebar.html'); ?>
 
             <main id="main-content" class="flex-1 p-8 bg-gray-50 text-center">
                 <div class="mb-6 flex items-center justify-center">
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="space-y-4 inline-block bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto px-5 pt-5">
-                    <form action="../../actions/admin/product/addProduct.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    <form action="../../../actions/admin/product/addProduct.php" method="POST" enctype="multipart/form-data" class="space-y-4">
                         <p class="block text-left text-sm font-medium text-gray-700">Product Image</p>
                         <div class="flex flex-wrap items-center gap-3 mt-2">
                             <input id="imageInput" accept="image/*" type="file" name="product_image" hidden>
@@ -71,7 +71,7 @@
                             </button>
                         </div>
 
-                        <button type="button" onclick="window.location.href='../../pages/admin/products.php'" class="inline-flex items-center rounded-lg mt-2 bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition cursor-pointer">
+                        <button type="button" onclick="window.location.href='../../../pages/admin/products.php'" class="inline-flex items-center rounded-lg mt-2 bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition cursor-pointer">
                             Cancel
                         </button>
 
@@ -83,6 +83,6 @@
             </main>
         </div>
 
-        <script src="../../assets/js/addProduct.js"></script>
+        <script src="../../../assets/js/addProduct.js"></script>
     </body>
 </html>

@@ -81,7 +81,7 @@
                         </thead>
                         <tbody>
                         <?php while ($row = mysqli_fetch_array($result)) {
-                            require '../../actions/admin/reservation/checkStatus.php';
+                            require '../../actions/admin/reservation/checkStatusReservation.php';
                         ?>
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 text-sm font-medium text-gray-900"><?php echo $row['student_id']; ?></td>
