@@ -53,8 +53,9 @@
                                     <select name="sizes[]" class="w-1/2 p-2 border rounded-md">
                                         <option value="">-- Select Size --</option>
                                         <option value="XS">XS</option>
-                                        <option value="M">Medium</option>
-                                        <option value="L">Large</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
                                         <option value="XL">XL</option>
                                     </select>
                                     <input type="number" name="stocks[]" placeholder="Stock Qty" class="w-1/2 p-2 border rounded-md">
