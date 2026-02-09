@@ -12,7 +12,7 @@
     $stmt->execute();
     $result = $stmt->get_result();
     
-    $studentData = ['name' => 'Not Set', 'email' => 'Not Set', 'course' => 'Not Set', 'year_level' => 'Not Set'];
+    $studentData = ['name' => 'Not Set', 'email' => 'Not Set', 'course' => 'Not Set', 'year_level' => 'Not Set', 'student_id' => $student_id];
     if ($result->num_rows > 0) $studentData = $result->fetch_assoc();
     
     $nameParts = explode(' ', $studentData['name'], 2);
@@ -42,7 +42,6 @@
           <img src="../../assets/images/sampleProfile.jpg" class="w-20 h-20 object-cover rounded-full" alt="Profile" />
           <div>
             <h2 class="text-xl font-semibold mb-1" id="displayName"><?php echo htmlspecialchars($studentData['name']); ?></h2>
-            <p class="text-sm text-gray-600">ID Number: <?php echo htmlspecialchars($student_id); ?></p>
             <p class="text-sm text-gray-600">Email: <span id="displayEmail"><?php echo htmlspecialchars($studentData['email']); ?></span></p>
           </div>
         </div>
@@ -55,7 +54,12 @@
 
       <form id="profileForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="flex flex-col">
-          <label class="text-sm mb-1">First Name</label>
+          <label class="text-sm mb-1">Student ID</label>
+          <input type="text" id="studentId" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="text-sm mb-1"></label>First Name</label>
           <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
         </div>
 
@@ -130,8 +134,9 @@
       const course = document.getElementById('course').value;
       const yearLevel = document.getElementById('yearLevel').value;
       const email = document.getElementById('email').value.trim();
+      const studentId = document.getElementById('studentId').value.trim();
       
-      if (!firstName || !lastName || !course || !yearLevel || !email.includes('@')) {
+      if (!firstName || !lastName || !course || !yearLevel || !email.includes('@') || !studentId) {
         alert('Please fill all fields correctly');
         return;
       }
@@ -143,7 +148,7 @@
       formData.append('email', email);
       formData.append('course', course);
       formData.append('year_level', yearLevel);
-      formData.append('student_id', <?php echo $student_id; ?>);
+      formData.append('student_id', studentId);
       
       fetch('../../actions/student/updateProfile.php', {method: 'POST', body: formData})
         .then(r => r.json())
