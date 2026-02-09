@@ -28,12 +28,12 @@ function deleteProduct(productId) {
             return;
         }
 
-        const url = `../../../actions/admin/product/deleteProduct.php?id=${productId}`;
+        const url = `../../actions/admin/product/deleteProduct.php?id=${productId}`;
         window.location.href = url;
         return;
     }
     
-    const url = `../../../actions/admin/product/deleteProduct.php?id=${productId}&size=${selectedSize}`;
+    const url = `../../actions/admin/product/deleteProduct.php?id=${productId}&size=${selectedSize}`;
     window.location.href = url;
 }
 
@@ -46,6 +46,6 @@ function editProduct(productId) {
         return;
     }
     
-    const url = `../../../actions/admin/product/editProduct.php?id=${productId}&size=${selectedSize}`;
+    const url = `../../pages/admin/product/editProduct.php?id=${productId}&size=${selectedSize}`;
     window.location.href = url;
 }

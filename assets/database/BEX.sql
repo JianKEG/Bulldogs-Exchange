@@ -51,6 +51,15 @@ CREATE TABLE Reservation (
     FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
 
+insert into reservation(student_id, product_id, size, quantity, reservation_date, status) value
+('2024-1022967', 1, 'M', 2, '2024-10-01', 'Pending'),
+('2024-1022967', 2, 'S', 1, '2024-10-02', 'Pending');
+
+
+insert into student(student_id, name, email, course, year_level, s_id) value
+('2024-1022967', 'John Doe', 'student@example.com', 'BSCS', '3rd Year', 1),
+('2024-1022968', 'Jane Smith', 'student@example.com', 'BSIT', '2nd Year', 2);
+
 /* sineparate ko yung size and stocks sa product table kasi different size = different stock. gets ba gets ba*/
 
 INSERT INTO Product(product_name, category, price) value

@@ -3,13 +3,13 @@
         session_start();
     }
 
-    require '../../config/accessController.php';
-    require_once '../../config/connection.php';
+    require '../../../config/accessController.php';
+    require_once '../../../config/connection.php';
     error_reporting(E_ERROR | E_PARSE);
     $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
     if(isset($_POST['createForm'])){
-        $target_dir = "../../assets/uploads/";
+        $target_dir = __DIR__ . "/../../../assets/uploads/";
         $temp = $_FILES["product_image"]["tmp_name"];
         $fileName = $_FILES["product_image"]["name"];
 

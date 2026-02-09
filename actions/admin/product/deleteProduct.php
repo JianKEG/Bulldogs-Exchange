@@ -3,8 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-    require '../../config/accessController.php';
-    require_once '../../config/connection.php';
+    require '../../../config/accessController.php';
+    require_once '../../../config/connection.php';
     error_reporting(E_ERROR | E_PARSE);
     $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
         $result2 = mysqli_query($connection, $sql);
 
         if($result == TRUE && $result2 == TRUE) {
-            header("Location: ../../pages/admin/products.php");
+            header("Location: ../../../pages/admin/products.php");
             exit();
         }
 
@@ -32,7 +32,7 @@ if (session_status() === PHP_SESSION_NONE) {
         $result = mysqli_query($connection, $sql);
 
         if($result == TRUE) {
-            header("Location: ../../pages/admin/products.php");
+            header("Location: ../../../pages/admin/products.php");
             exit();
         }
     }
