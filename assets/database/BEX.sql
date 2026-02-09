@@ -8,7 +8,7 @@ CREATE TABLE Student_Log(
 );
 
 CREATE TABLE Student (
-    student_id varchar(255) PRIMARY KEY, /* eto dapat yung student id na mismo ng student like 2024-1022967 */
+    student_id varchar(255) UNIQUE PRIMARY KEY, /* eto dapat yung student id na mismo ng student like 2024-1022967 */
     name VARCHAR(255),
     email VARCHAR(255),
     course VARCHAR(255),
@@ -51,15 +51,6 @@ CREATE TABLE Reservation (
     FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
 
-insert into reservation(student_id, product_id, size, quantity, reservation_date, status) value
-('2024-1022967', 1, 'M', 2, '2024-10-01', 'Pending'),
-('2024-1022967', 2, 'S', 1, '2024-10-02', 'Pending');
-
-
-insert into student(student_id, name, email, course, year_level, s_id) value
-('2024-1022967', 'John Doe', 'student@example.com', 'BSCS', '3rd Year', 1),
-('2024-1022968', 'Jane Smith', 'student@example.com', 'BSIT', '2nd Year', 2);
-
 /* sineparate ko yung size and stocks sa product table kasi different size = different stock. gets ba gets ba*/
 
 INSERT INTO Product(product_name, category, price) value
@@ -83,31 +74,13 @@ insert into student_log(username, password) value
 ('student', '202cb962ac59075b964b07152d234b70'),
 ('student2', '202cb962ac59075b964b07152d234b70');
 
+insert into student(student_id, name, email, course, year_level, s_id) value
+('2024-1022967', 'John Doe', 'student@example.com', 'BSCS', '3rd Year', 1),
+('2024-1022968', 'Jane Smith', 'student@example.com', 'BSIT', '2nd Year', 2);
+
 insert into admin(username, password) value
 ('admin', '202cb962ac59075b964b07152d234b70');
 
-SELECT 
-product.product_id,
-product.product_name,
-product.category, 
-product.price,
-product_sizestock.size, 
-product_sizestock.stock_quantity
-FROM product
-LEFT JOIN product_sizestock ON product.product_id = product_sizestock.product_id
-WHERE product_sizestock.size = "S" and product.product_id = 1
-ORDER BY product.product_id;
-
-delete from product_sizestock where product_id = 1 and size = "S";
-
-SELECT 
-product.product_id, 
-product.product_name, 
-product.category, 
-product.price,
-GROUP_CONCAT(product_sizestock.size ORDER BY product_sizestock.size SEPARATOR '|') AS sizes,
-GROUP_CONCAT(product_sizestock.stock_quantity ORDER BY product_sizestock.size SEPARATOR '|') AS stocks
-FROM product
-LEFT JOIN product_sizestock ON product.product_id = product_sizestock.product_id
-GROUP BY product.product_id, product.product_name, product.category, product.price
-ORDER BY product.product_id;
+insert into reservation(student_id, product_id, size, quantity, reservation_date, status) value
+('2024-1022967', 1, 'M', 2, '2024-10-01', 'Pending'),
+('2024-1022968', 2, 'S', 1, '2024-10-02', 'Pending');
