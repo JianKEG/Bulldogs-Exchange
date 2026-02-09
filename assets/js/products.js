@@ -42,7 +42,8 @@ function editProduct(productId) {
     const selectedSize = selectSize.value;
     
     if (!selectedSize) {
-        alert("Select a size to edit the product.");
+        const url = `../../pages/admin/product/editProduct.php?id=${productId}`;
+        window.location.href = url;
         return;
     }
     
