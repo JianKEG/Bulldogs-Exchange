@@ -28,12 +28,12 @@ function deleteProduct(productId) {
             return;
         }
 
-        const url = `../../actions/admin/deleteProduct.php?id=${productId}`;
+        const url = `../../actions/admin/product/deleteProduct.php?id=${productId}`;
         window.location.href = url;
         return;
     }
     
-    const url = `../../actions/admin/deleteProduct.php?id=${productId}&size=${selectedSize}`;
+    const url = `../../actions/admin/product/deleteProduct.php?id=${productId}&size=${selectedSize}`;
     window.location.href = url;
 }
 
@@ -42,10 +42,11 @@ function editProduct(productId) {
     const selectedSize = selectSize.value;
     
     if (!selectedSize) {
-        alert("Select a size to edit the product.");
+        const url = `../../pages/admin/product/editProduct.php?id=${productId}`;
+        window.location.href = url;
         return;
     }
     
-    const url = `../../actions/admin/editProduct.php?id=${productId}&size=${selectedSize}`;
+    const url = `../../pages/admin/product/editProduct.php?id=${productId}&size=${selectedSize}`;
     window.location.href = url;
 }
