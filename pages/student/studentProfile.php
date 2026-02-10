@@ -1,23 +1,10 @@
 <?php 
     if (session_status() === PHP_SESSION_NONE) session_start();
-    require_once('../../config/connection.php');
+    require_once '../../config/connection.php';
+    require_once '../../config/accessController.php';
+
     include ('../../includes/student/header.html');
-    
-    if (!isset($_SESSION['id'])) header('Location: ../../index.php');
-    
-    $student_id = $_SESSION['id'];
-    $sql = "SELECT name, email, course, year_level FROM Student WHERE student_id = ?";
-    $stmt = $connection->prepare($sql);
-    $stmt->bind_param('i', $student_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $studentData = ['name' => 'Not Set', 'email' => 'Not Set', 'course' => 'Not Set', 'year_level' => 'Not Set', 'student_id' => $student_id];
-    if ($result->num_rows > 0) $studentData = $result->fetch_assoc();
-    
-    $nameParts = explode(' ', $studentData['name'], 2);
-    $firstName = isset($nameParts[0]) ? $nameParts[0] : '';
-    $lastName = isset($nameParts[1]) ? $nameParts[1] : '';
+    require ('../../actions/student/studentProfile.php');
 ?>
 
 <!DOCTYPE html>
@@ -35,14 +22,14 @@
 <body class="bg-[#f4f6f8] font-sans">
   <div class="max-w-225 mx-auto mt-10 bg-white rounded-lg overflow-hidden shadow-lg">
     <div class="h-20 bg-linear-to-r from-[#2f6bdc] to-[#f5c400]"></div>
-
+  
     <div class="p-8">
       <div class="flex justify-between items-center mb-8">
         <div class="flex items-center gap-12">
           <img src="../../assets/images/sampleProfile.jpg" class="w-20 h-20 object-cover rounded-full" alt="Profile" />
           <div>
-            <h2 class="text-xl font-semibold mb-1" id="displayName"><?php echo htmlspecialchars($studentData['name']); ?></h2>
-            <p class="text-sm text-gray-600">Email: <span id="displayEmail"><?php echo htmlspecialchars($studentData['email']); ?></span></p>
+            <h2 class="text-xl font-semibold mb-1" id="displayName"><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></h2>
+            <p class="text-sm text-gray-600">Email: <span id="displayEmail"><?php echo $row['email']; ?></span></p>
           </div>
         </div>
         <div class="flex gap-2" id="buttonContainer">
@@ -52,25 +39,27 @@
         </div>
       </div>
 
+      
       <form id="profileForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="flex flex-col">
           <label class="text-sm mb-1">Student ID</label>
-          <input type="text" id="studentId" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
+          <input type="text" id="student_id" name="student_id" value="<?php echo $row['student_id']; ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
         </div>
 
         <div class="flex flex-col">
-          <label class="text-sm mb-1"></label>First Name</label>
-          <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
+          <label class="text-sm mb-1">First Name</label>
+          <input type="text" id="firstName" name="firstName" value="<?php echo $row['first_name']; ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
         </div>
 
         <div class="flex flex-col">
           <label class="text-sm mb-1">Last Name</label>
-          <input type="text" id="lastName" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
+          <input type="text" id="lastName" name="lastName" value="<?php echo $row['last_name']; ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
         </div>
 
         <div class="flex flex-col">
           <label class="text-sm mb-1">Program</label>
           <select id="course" name="course" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none">
+            <?php echo "<option value='" . $row['course'] . "' selected>" . $row['course'] . "</option>"; ?>
             <option value="">Select a program</option>
             <option value="BS Computer Science">BS Computer Science</option>
             <option value="BS Information Technology">BS Information Technology</option>
@@ -87,7 +76,8 @@
 
         <div class="flex flex-col">
           <label class="text-sm mb-1">Year Level</label>
-          <select id="yearLevel" name="yearLevel" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none">
+          <select id="year_level" name="year_level" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none">
+            <?php echo "<option value='" . $row['year_level'] . "' selected>" . $row['year_level'] . "</option>"; ?>
             <option value="">Select year level</option>
             <option value="1st Year">1st Year</option>
             <option value="2nd Year">2nd Year</option>
@@ -99,7 +89,7 @@
 
         <div class="flex flex-col md:col-span-2">
           <label class="text-sm mb-1">Email</label>
-          <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($studentData['email']); ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
+          <input type="email" id="email" name="email" value="<?php echo $row['email']; ?>" disabled class="input-edit p-2.5 border border-gray-300 rounded-md bg-[#f9f9f9] focus:border-[#2f6bdc] focus:outline-none"/>
         </div>
       </form>
     </div>
@@ -132,11 +122,11 @@
       const firstName = document.getElementById('firstName').value.trim();
       const lastName = document.getElementById('lastName').value.trim();
       const course = document.getElementById('course').value;
-      const yearLevel = document.getElementById('yearLevel').value;
+      const year_level = document.getElementById('year_level').value;
       const email = document.getElementById('email').value.trim();
-      const studentId = document.getElementById('studentId').value.trim();
+      const student_id = document.getElementById('student_id').value.trim();
       
-      if (!firstName || !lastName || !course || !yearLevel || !email.includes('@') || !studentId) {
+      if (!firstName || !lastName || !course || !year_level || !email.includes('@') || !student_id) {
         alert('Please fill all fields correctly');
         return;
       }
@@ -144,11 +134,10 @@
       const formData = new FormData();
       formData.append('firstName', firstName);
       formData.append('lastName', lastName);
-      formData.append('fullName', firstName + ' ' + lastName);
       formData.append('email', email);
       formData.append('course', course);
-      formData.append('year_level', yearLevel);
-      formData.append('student_id', studentId);
+      formData.append('year_level', year_level);
+      formData.append('student_id', student_id);
       
       fetch('../../actions/student/updateProfile.php', {method: 'POST', body: formData})
         .then(r => r.json())
@@ -165,9 +154,6 @@
         })
         .catch(e => alert('An error occurred'));
     });
-    
-    document.getElementById('course').value = '<?php echo htmlspecialchars($studentData['course']); ?>';
-    document.getElementById('yearLevel').value = '<?php echo htmlspecialchars($studentData['year_level']); ?>';
   </script>
 </body>
 </html>
