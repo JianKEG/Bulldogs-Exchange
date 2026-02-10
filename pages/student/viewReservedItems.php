@@ -1,33 +1,42 @@
 <?php
     if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-    $page_title = "My Reservations";
-    
+        session_start();
+    }
     require '../../config/accessController.php';
+    require '../../config/connection.php';
 
-    $user = $_SESSION['username'];
-    $cookie_name = 'cart_' . $user;
-
-    if (isset($_COOKIE[$cookie_name]) && empty($_SESSION['cart'])) {
-        $_SESSION['cart'] = json_decode($_COOKIE[$cookie_name], true);
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
     }
 
-    if (isset($_POST['reserve_submit'])) {
-        $newItem = [
-            'id'=> uniqid(),'product'=> $_POST['product_name'], 'size'=> $_POST['size'],'quantity'=> $_POST['quantity'],'price'=> $_POST['price']
-        ];
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
+    if(isset($_POST['reserve_submit'])){
+        $product_id = $_POST['product_id'];
+        $size = $_POST['size'];
+        $quantity = (int)$_POST['quantity'];
+
+        $stmt = $connection->prepare("SELECT price, product_name FROM Product WHERE product_id = ?");
+        $stmt->bind_param("i", $product_id);
+        $stmt->execute();
+        $product = $stmt->get_result()->fetch_assoc();
+
+        if($product){
+            $cart_key = $product_id . "_" . $size;
+
+            if(isset($_SESSION['cart'][$cart_key])){
+                $_SESSION['cart'][$cart_key]['quantity'] += $quantity;
+            } 
+            else {
+                $_SESSION['cart'][$cart_key] = ['product_name' => $product['product_name'], 'size'=> $size, 'quantity'=> $quantity, 'price'=> $product['price']];
+            }
+            $_SESSION['message'] = "Item added to list.";
         }
+            header("Location: viewReservedItems.php");
+            exit();
+    }
 
-        $_SESSION['cart'][] = $newItem;
-        
-        $cart = json_encode($_SESSION['cart']);
-
-        setcookie($cookie_name, $cart, time() + (60*60*24*7), '/');
-        
+    if(isset($_GET['remove'])){
+        $key = $_GET['remove'];
+        unset($_SESSION['cart'][$key]);
         header("Location: viewReservedItems.php");
         exit();
     }
@@ -57,25 +66,8 @@
     
     <body class="bg-white font-sans antialiased text-zinc-900">
         <div class="cart-container">
-            <h2>Your Reservation List</h2>
-            
-            <?php if (isset($_SESSION['message'])): ?>
-                <div style="padding: 15px; margin-bottom: 20px; border-radius: 5px; 
-                    <?php 
-                    if (strpos($_SESSION['message'], 'successfully') !== false) {
-                        echo 'background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;';
-                    } else {
-                        echo 'background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;';
-                    }
-                    ?>">
-                    <?php 
-                    echo htmlspecialchars($_SESSION['message']); 
-                    unset($_SESSION['message']);
-                    ?>
-                </div>
-            <?php endif; ?>
-            
-            <?php if (!empty($_SESSION['cart'])): ?>
+            <h2>Your Cart</h2>
+            <?php if(!empty($_SESSION['cart'])): ?>
                 <table>
                     <thead>
                         <tr>
@@ -83,46 +75,43 @@
                             <th>Size</th>
                             <th>Qty</th>
                             <th>Price</th>
-                            
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
                         $grand_total = 0;
-                        foreach ($_SESSION['cart'] as $item): 
+                        foreach($_SESSION['cart'] as $key => $item): 
                             $subtotal = $item['price'] * $item['quantity'];
                             $grand_total += $subtotal;
                         ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($item['product']); ?></td>
-                            <td><?php echo htmlspecialchars($item['size']); ?></td>
-                            <td><?php echo $item['quantity']; ?></td>
-                            <td>PHP <?php echo number_format($subtotal, 2); ?></td>
+                            <td><?=$item['product_name'] ?></td>
+                            <td><?=$item['size'] ?></td>
+                            <td><?= $item['quantity'] ?></td>
+                            <td>PHP <?= number_format($subtotal, 2) ?></td>
                             <td>
-                                <a href="../../actions/student/removeItem.php?id=<?php echo $item['id']; ?>" 
-                                style="color: #ff4d4d; text-decoration: none; font-weight: bold;"
-                                onclick="return confirm('Remove this item from your reservation?')">
-                                Remove
-                                </a>
+                                <a href="?remove=<?= $key ?>" 
+                                onclick="return confirm('Remove this item?')" 
+                                style="color:red; font-weight:bold;">Remove</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-
-                <div class="total">Grand Total: PHP <?php echo number_format($grand_total, 2); ?></div>
-
+                <div class="total">
+                    Grand Total: PHP <?= number_format($grand_total, 2) ?>
+                </div>
                 <div class="actions">
-                    <a href="uniform.php" class="btn btn-more">Reserve More Items</a>
-                    
-                    <form action="../../actions/student/reservation.php" method="POST">
+                    <a href="uniform.php" class="btn btn-more">Add More Items</a> 
+                    <form action="../../actions/student/finalizeReservation.php" method="POST">
                         <button type="submit" class="btn btn-finalize">Finalize Reservation</button>
                     </form>
                 </div>
 
             <?php else: ?>
-                <p class="mt-4 mb-4 text-gray-600">Your reservation list is empty.</p>
-                <a href="uniform.php" class="btn btn-finalize inline-block">Go to Uniforms</a>
+                <p>Your list is empty.</p>
+                <a href="uniform.php" class="btn btn-finalize">Go to Uniforms</a>
             <?php endif; ?>
         </div>
     </body>
