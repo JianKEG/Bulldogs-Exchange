@@ -7,9 +7,10 @@ CREATE TABLE Student_Log(
     password VARCHAR(255)
 );
 
-CREATE TABLE Student (
+CREATE TABLE Student ( /* hiwalay first name at last name */
     student_id varchar(255) UNIQUE PRIMARY KEY, /* eto dapat yung student id na mismo ng student like 2024-1022967 */
-    name VARCHAR(255),
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
     email VARCHAR(255),
     course VARCHAR(255),
     year_level VARCHAR(20),
@@ -74,9 +75,9 @@ insert into student_log(username, password) value
 ('student', '202cb962ac59075b964b07152d234b70'),
 ('student2', '202cb962ac59075b964b07152d234b70');
 
-insert into student(student_id, name, email, course, year_level, s_id) value
-('2024-1022967', 'John Doe', 'student@example.com', 'BSCS', '3rd Year', 1),
-('2024-1022968', 'Jane Smith', 'student@example.com', 'BSIT', '2nd Year', 2);
+insert into student(student_id, first_name, last_name, email, course, year_level, s_id) value
+('2024-1022967', 'John', 'Doe', 'student@example.com', 'BS Computer Science', '3rd Year', 1),
+('2024-1022968', 'Jane', 'Smith', 'student@example.com', 'BS Information Technology', '2nd Year', 2);
 
 insert into admin(username, password) value
 ('admin', '202cb962ac59075b964b07152d234b70');
@@ -84,3 +85,5 @@ insert into admin(username, password) value
 insert into reservation(student_id, product_id, size, quantity, reservation_date, status) value
 ('2024-1022967', 1, 'M', 2, '2024-10-01', 'Pending'),
 ('2024-1022968', 2, 'S', 1, '2024-10-02', 'Pending');
+
+SELECT * FROM Student WHERE s_id = 1; 
