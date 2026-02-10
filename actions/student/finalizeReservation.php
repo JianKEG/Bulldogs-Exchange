@@ -18,12 +18,11 @@ if (!$login_id) {
 	exit();
 }
 
-// map login id to student_id
-$stmt = $connection->prepare("SELECT student_id FROM Student WHERE s_id = ? LIMIT 1");
-$stmt->bind_param('i', $login_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows === 0) {
+// map login id to student_id 
+$login_id_int = (int)$login_id;
+$sql = "SELECT student_id FROM Student WHERE s_id = $login_id_int LIMIT 1";
+$result = $connection->query($sql);
+if (!$result || $result->num_rows === 0) {
 	$_SESSION['message'] = 'Please complete your profile before reserving.';
 	header('Location: ../../pages/student/completeProfile.php');
 	exit();
@@ -42,22 +41,26 @@ try {
 			$size = $item['size'];
 			$quantity = (int)$item['quantity'];
 
-			$stmtp = $connection->prepare("SELECT product_id FROM Product WHERE product_name = ? LIMIT 1");
-			$stmtp->bind_param('s', $product_name);
-			$stmtp->execute();
-			$rp = $stmtp->get_result();
-			if ($rp->num_rows === 0) {
+			// lookup product_id using direct query; escape product name
+			$product_name_esc = $connection->real_escape_string($product_name);
+			$sqlp = "SELECT product_id FROM Product WHERE product_name = '$product_name_esc' LIMIT 1";
+			$rp = $connection->query($sqlp);
+			if (!$rp || $rp->num_rows === 0) {
 				throw new Exception('Product not found: ' . $product_name);
 			}
 			$prod = $rp->fetch_assoc();
 			$product_id = (int)$prod['product_id'];
 
 			$status = 'pending';
-			$sqli = "INSERT INTO Reservation (student_id, product_id, size, quantity, reservation_date, status) VALUES (?, ?, ?, ?, ?, ?)";
-			$stmti = $connection->prepare($sqli);
-			$stmti->bind_param('sisiss', $student_id, $product_id, $size, $quantity, $today, $status);
-			if (!$stmti->execute()) {
-				throw new Exception('Insert failed: ' . $stmti->error);
+			// insert reservation using escaped values (status is 'pending')
+			$student_id_int = (int)$student_id;
+			$product_id_int = (int)$product_id;
+			$size_esc = $connection->real_escape_string($size);
+			$today_esc = $connection->real_escape_string($today);
+			$status_esc = $connection->real_escape_string($status);
+			$sqli = "INSERT INTO Reservation (student_id, product_id, size, quantity, reservation_date, status) VALUES ($student_id_int, $product_id_int, '$size_esc', $quantity, '$today_esc', '$status_esc')";
+			if (!$connection->query($sqli)) {
+				throw new Exception('Insert failed: ' . $connection->error);
 			}
 		}
 
@@ -75,11 +78,10 @@ try {
 		$quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
 
 		if (!$product_id && $product_name) {
-			$stmtp = $connection->prepare("SELECT product_id FROM Product WHERE product_name = ? LIMIT 1");
-			$stmtp->bind_param('s', $product_name);
-			$stmtp->execute();
-			$rp = $stmtp->get_result();
-			if ($rp->num_rows === 0) {
+			$product_name_esc = $connection->real_escape_string($product_name);
+			$sqlp = "SELECT product_id FROM Product WHERE product_name = '$product_name_esc' LIMIT 1";
+			$rp = $connection->query($sqlp);
+			if (!$rp || $rp->num_rows === 0) {
 				throw new Exception('Product not found');
 			}
 			$prod = $rp->fetch_assoc();
@@ -91,11 +93,14 @@ try {
 		}
 
 		$status = 'pending';
-		$sqli = "INSERT INTO Reservation (student_id, product_id, size, quantity, reservation_date, status) VALUES (?, ?, ?, ?, ?, ?)";
-		$stmti = $connection->prepare($sqli);
-		$stmti->bind_param('sisiss', $student_id, $product_id, $size, $quantity, $today, $status);
-		if (!$stmti->execute()) {
-			throw new Exception('Insert failed: ' . $stmti->error);
+		$student_id_int = (int)$student_id;
+		$product_id_int = (int)$product_id;
+		$size_esc = $connection->real_escape_string($size);
+		$today_esc = $connection->real_escape_string($today);
+		$status_esc = $connection->real_escape_string($status);
+		$sqli = "INSERT INTO Reservation (student_id, product_id, size, quantity, reservation_date, status) VALUES ($student_id_int, $product_id_int, '$size_esc', $quantity, '$today_esc', '$status_esc')";
+		if (!$connection->query($sqli)) {
+			throw new Exception('Insert failed: ' . $connection->error);
 		}
 	}
 
