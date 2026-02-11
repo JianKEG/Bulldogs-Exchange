@@ -177,6 +177,56 @@ INSERT INTO product_sizestock(product_id, size, stock_quantity) value
 ("12", "L", "7"),
 ("12", "XL", "10");
 
+/*Merchandise Product ID
+	Tote - 13
+	Sling Bag - 14
+    Tumbler - 15
+    Yellow Varsity Jacket - 16
+    Blue Varsity Jacket - 17
+    Bulldog toy - 18
+    Adidas Shirt - 19
+	*/
+INSERT INTO Product(product_name, category, price) value
+("Tote Bag", "Merchandise", 199);
+INSERT INTO product_sizestock(product_id, size, stock_quantity) value
+("13", "Obe Size", "10");
+INSERT INTO Product(product_name, category, price) value
+("Sling Bag", "Merchandise", 299);
+INSERT INTO product_sizestock(product_id, size, stock_quantity) value
+("14", "One Size", "10");
+INSERT INTO Product(product_name, category, price) value
+("Tumbler", "Merchandise", 399);
+INSERT INTO product_sizestock(product_id, size, stock_quantity) value
+("15", "One Size", "10");
+INSERT INTO Product(product_name, category, price) value
+("Yellow Varsity Jacket" , "Merchandise", 899);
+INSERT INTO product_sizestock(product_id, size, stock_quantity) value
+("16", "XS", "17"),
+("16", "S", "12"),
+("16", "M", "6"),
+("16", "L", "7"),
+("16", "XL", "10");
+INSERT INTO Product(product_name, category, price) value
+("Blue Varsity Jacket" , "Merchandise", 899);
+INSERT INTO product_sizestock(product_id, size, stock_quantity) value
+("17", "XS", "17"),
+("17", "S", "12"),
+("17", "M", "6"),
+("17", "L", "7"),
+("17", "XL", "10");
+INSERT INTO Product(product_name, category, price) value
+("BulldogToy", "Merchandise", 399);
+INSERT INTO product_sizestock(product_id, size, stock_quantity) value
+("18", "One Size", "10");
+INSERT INTO Product(product_name, category, price) value
+("Adidas" , "Merchandise", 1300);
+INSERT INTO product_sizestock(product_id, size, stock_quantity) value
+("19", "XS", "17"),
+("19", "S", "12"),
+("19", "M", "6"),
+("19", "L", "7"),
+("19", "XL", "10");
+
 /* passwords are 123 */
 insert into student_log(username, password) value
 ('student', '202cb962ac59075b964b07152d234b70'),
