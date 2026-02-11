@@ -3,6 +3,7 @@
         session_start();
     }
     $page_title = "Uniforms";
+
     include ('../../includes/student/header.html');
     require '../../config/accessController.php';
 ?>
