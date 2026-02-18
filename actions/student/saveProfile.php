@@ -24,14 +24,14 @@
     // Server-side validation
     $errors = [];
     
-    // Validate first name (letters, spaces, dots, hyphens, apostrophes only, 2-100 characters)
-    if (!preg_match("/^[a-zA-Z\s.'-]{2,100}$/", $first_name)) {
-        $errors[] = "Invalid first name format. Use only letters, spaces, and common punctuation (2-100 characters).";
+    // Validate first name (letters, spaces, dots, hyphens, apostrophes only, 1-50 characters)
+    if (!preg_match("/^[a-zA-Z\s.'-]{1,50}$/", $first_name)) {
+        $errors[] = "Invalid first name format. Use only letters, spaces, and common punctuation (1-50 characters).";
     }
-
-    // Validate last name (letters, spaces, dots, hyphens, apostrophes only, 2-100 characters)
-    if (!preg_match("/^[a-zA-Z\s.'-]{2,100}$/", $last_name)) {
-        $errors[] = "Invalid last name format. Use only letters, spaces, and common punctuation (2-100 characters).";
+    
+    // Validate last name (letters, spaces, dots, hyphens, apostrophes only, 1-50 characters)
+    if (!preg_match("/^[a-zA-Z\s.'-]{1,50}$/", $last_name)) {
+        $errors[] = "Invalid last name format. Use only letters, spaces, and common punctuation (1-50 characters).";
     }
     
     // Validate email

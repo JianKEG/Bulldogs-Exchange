@@ -69,13 +69,13 @@
             <div class="form-group">
                 <label for="first_name">First Name *</label>
                 <input type="text" id="first_name" name="first_name" required>
-                <div class="error" id="firstNameError">Please enter a valid first name (letters and spaces only, 2-100 characters)</div>
+                <div class="error" id="firstNameError">Please enter a valid first name (letters and spaces only, 1-50 characters)</div>
             </div>
-
+            
             <div class="form-group">
                 <label for="last_name">Last Name *</label>
                 <input type="text" id="last_name" name="last_name" required>
-                <div class="error" id="lastNameError">Please enter a valid last name (letters and spaces only, 2-100 characters)</div>
+                <div class="error" id="lastNameError">Please enter a valid last name (letters and spaces only, 1-50 characters)</div>
             </div>
             
             <div class="form-group">
@@ -134,12 +134,12 @@
             
             // Validate First Name
             const firstName = document.getElementById('first_name').value.trim();
-            const namePattern = /^[a-zA-Z\s.'-]{2,100}$/;
+            const namePattern = /^[a-zA-Z\s.'-]{1,50}$/;
             if (!namePattern.test(firstName)) {
                 document.getElementById('firstNameError').style.display = 'block';
                 isValid = false;
             }
-
+            
             // Validate Last Name
             const lastName = document.getElementById('last_name').value.trim();
             if (!namePattern.test(lastName)) {
@@ -182,16 +182,16 @@
         
         // Real-time validation
         document.getElementById('first_name').addEventListener('blur', function() {
-            const namePattern = /^[a-zA-Z\s.'-]{2,100}$/;
+            const namePattern = /^[a-zA-Z\s.'-]{1,50}$/;
             if (!namePattern.test(this.value.trim())) {
                 document.getElementById('firstNameError').style.display = 'block';
             } else {
                 document.getElementById('firstNameError').style.display = 'none';
             }
         });
-
+        
         document.getElementById('last_name').addEventListener('blur', function() {
-            const namePattern = /^[a-zA-Z\s.'-]{2,100}$/;
+            const namePattern = /^[a-zA-Z\s.'-]{1,50}$/;
             if (!namePattern.test(this.value.trim())) {
                 document.getElementById('lastNameError').style.display = 'block';
             } else {

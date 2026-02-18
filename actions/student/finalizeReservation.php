@@ -25,7 +25,7 @@
 
 	if ($result->num_rows === 0) {
 		$_SESSION['message'] = 'Student profile not found.';
-		header('Location: ../../pages/student/viewReservedItems.php');
+		header('Location: ../../pages/student/completeProfile.php');
 		exit();
 	}
 
