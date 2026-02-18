@@ -4,7 +4,7 @@
     }
     $page_title = "Merchandise";
 
-    include ('../../includes/student/header.html');
+    include ('../../includes/student/header.php');
     require '../../config/accessController.php';
 ?>
 

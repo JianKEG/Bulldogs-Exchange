@@ -4,7 +4,7 @@
     }
 
     $page_title = "Home";
-    include ('../../includes/student/header.html');
+    include ('../../includes/student/header.php');
 ?> 
 
 <!DOCTYPE html>
@@ -13,8 +13,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../../src/output.css">
-        <title>Home</title> 
-           
+        <title>Home</title>       
     </head>
     
     <body>

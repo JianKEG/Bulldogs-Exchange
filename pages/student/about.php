@@ -5,7 +5,7 @@
     $page_title = "About Us";
     require '../../config/accessController.php';
     require '../../config/connection.php';
-    include ('../../includes/student/header.html');
+    include ('../../includes/student/header.php');
 ?>
 <!DOCTYPE html>
 <html>
