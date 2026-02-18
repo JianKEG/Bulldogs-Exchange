@@ -59,23 +59,5 @@ insert into User_Credentials(username, password) value
 ('student', '202cb962ac59075b964b07152d234b70'),
 ('student2', '202cb962ac59075b964b07152d234b70');
 
-insert into student(student_id, first_name, last_name, email, course, year_level, userid) value
-('2024-1022967', 'John', 'Doe', 'student@example.com', 'BS Computer Science', '3rd Year', 1),
-('2024-1022968', 'Jane', 'Smith', 'student@example.com', 'BS Information Technology', '2nd Year', 2);
-
 insert into admin(username, password) value
 ('admin', '202cb962ac59075b964b07152d234b70');
-
-SELECT * FROM Student WHERE userid = 1; 
-
-SELECT 
-	Product.product_id, 
-	Product.product_name, 
-	Product.category, 
-	Product.price,
-	GROUP_CONCAT(Product_SizeStock.size ORDER BY Product_SizeStock.size SEPARATOR '|') AS sizes,
-	GROUP_CONCAT(Product_SizeStock.stock_quantity ORDER BY Product_SizeStock.size SEPARATOR '|') AS stocks
-	FROM Product
-	LEFT JOIN Product_SizeStock ON Product.product_id = Product_SizeStock.product_id
-	GROUP BY Product.product_id, Product.product_name, Product.category, Product.price
-	ORDER BY Product.product_id;
