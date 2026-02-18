@@ -18,8 +18,8 @@
 		exit();
 	}
 
-	$stmt = $connection->prepare("SELECT student_id FROM Student WHERE s_id = ? LIMIT 1");
-	$stmt->bind_param("s", $login_id);
+	$stmt = $connection->prepare("SELECT student_id FROM Student WHERE userid = ? LIMIT 1");
+	$stmt->bind_param("i", $login_id);
 	$stmt->execute();
 	$result = $stmt->get_result();
 
@@ -44,22 +44,34 @@
 	$connection->begin_transaction();
 
 	try {
-		$stmtInsert = $connection->prepare("INSERT INTO Reservation (student_id, product_id, size, quantity, reservation_date, status) VALUES (?, ?, ?, ?, ?, ?)");
+		$stmtInsert = $connection->prepare("INSERT INTO Reservation (student_id, pssid, quantity, reservation_date, status) VALUES (?, ?, ?, ?, ?)");
+		$stmtLookup = $connection->prepare("SELECT pssid FROM Product_SizeStock WHERE product_id = ? AND size = ? LIMIT 1");
+		$stmtUpdateStock = $connection->prepare("UPDATE Product_SizeStock SET stock_quantity = stock_quantity - ? WHERE pssid = ?");
 
 		foreach ($_SESSION['cart'] as $item) {
 			$p_id = $item['product_id'];
 			$size = $item['size'];
 			$qty  = $item['quantity'];
 
-			$stmtInsert->bind_param("sisiss", $student_id, $p_id, $size, $qty, $today, $status);
+			$stmtLookup->bind_param("is", $p_id, $size);
+			$stmtLookup->execute();
+			$lookupResult = $stmtLookup->get_result();
+
+			if ($lookupResult->num_rows === 0) {
+				throw new Exception("Size not found for product: " . $p_id);
+			}
+
+			$pssRow = $lookupResult->fetch_assoc();
+			$pssid = (int) $pssRow['pssid'];
+
+			$stmtInsert->bind_param("siiss", $student_id, $pssid, $qty, $today, $status);
 			
 			if (!$stmtInsert->execute()) {
 				throw new Exception("Failed to insert item: " . $stmtInsert->error);
 			}
 			
-			$updateStock = $connection->prepare("UPDATE Product_SizeStock SET stock_quantity = stock_quantity - ? WHERE product_id = ? AND size = ?");
-			$updateStock->bind_param("iis", $qty, $p_id, $size);
-			$updateStock->execute();	
+			$stmtUpdateStock->bind_param("ii", $qty, $pssid);
+			$stmtUpdateStock->execute();	
 		}
 
 		$connection->commit();

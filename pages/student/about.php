@@ -25,7 +25,7 @@
 </style>
 <h1 class="text-4xl font-bold text-center mx-auto mt-20">About Us</h1>
     <p class="text-lg text-slate-500 text-center mt-5 max-w-2xl mx-auto">
-        A web-based inventory platform where students can view real-time stock of uniforms/merchandise and secure reservations without going to the physical store.
+        A web-based inventory platform where students can view real-time stock of uniforms and secure reservations without going to the physical store.
     </p>
     <div class="text-lg text-slate-500 text-center mt-10 max-w-xs mx-auto">
         <ul>

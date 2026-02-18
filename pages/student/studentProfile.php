@@ -2,9 +2,8 @@
     if (session_status() === PHP_SESSION_NONE) session_start();
     require_once '../../config/connection.php';
     require_once '../../config/accessController.php';
-    $page_title = "Student Profile";
-    include ('../../includes/student/header.php');
-    require ('../../actions/student/studentProfile.php');
+
+    require '../../actions/student/studentProfile.php';
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +25,6 @@
     <div class="p-8">
       <div class="flex justify-between items-center mb-8">
         <div class="flex items-center gap-12">
-          <img src="../../assets/images/sampleProfile.jpg" class="w-20 h-20 object-cover rounded-full" alt="Profile" />
           <div>
             <h2 class="text-xl font-semibold mb-1" id="displayName"><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></h2>
             <p class="text-sm text-gray-600">Email: <span id="displayEmail"><?php echo $row['email']; ?></span></p>

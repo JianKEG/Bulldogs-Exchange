@@ -14,7 +14,8 @@
     $login_id = $_SESSION['id'];
     
     // Retrieve and sanitize inputs
-    $name = trim($_POST['name']);
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);
     $student_id = trim($_POST['student_id']);
     $course = trim($_POST['course']);
@@ -23,9 +24,14 @@
     // Server-side validation
     $errors = [];
     
-    // Validate name (letters, spaces, dots, hyphens, apostrophes only, 2-100 characters)
-    if (!preg_match("/^[a-zA-Z\s.'-]{2,100}$/", $name)) {
-        $errors[] = "Invalid name format. Use only letters, spaces, and common punctuation (2-100 characters).";
+    // Validate first name (letters, spaces, dots, hyphens, apostrophes only, 2-100 characters)
+    if (!preg_match("/^[a-zA-Z\s.'-]{2,100}$/", $first_name)) {
+        $errors[] = "Invalid first name format. Use only letters, spaces, and common punctuation (2-100 characters).";
+    }
+
+    // Validate last name (letters, spaces, dots, hyphens, apostrophes only, 2-100 characters)
+    if (!preg_match("/^[a-zA-Z\s.'-]{2,100}$/", $last_name)) {
+        $errors[] = "Invalid last name format. Use only letters, spaces, and common punctuation (2-100 characters).";
     }
     
     // Validate email
@@ -60,7 +66,7 @@
     }
     
     // Check if profile already exists for this login account
-    $sql_check = "SELECT student_id FROM Student WHERE s_id = ?";
+    $sql_check = "SELECT student_id FROM Student WHERE userid = ?";
     $stmt_check = $connection->prepare($sql_check);
     $stmt_check->bind_param('i', $login_id);
     $stmt_check->execute();
@@ -101,14 +107,14 @@
     
     // Insert student details into Student table
     try {
-        $sql_insert = "INSERT INTO Student (student_id, name, email, course, year_level, s_id) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO Student (student_id, first_name, last_name, email, course, year_level, userid) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt_insert = $connection->prepare($sql_insert);
         
         if (!$stmt_insert) {
             throw new Exception("Database prepare error: " . $connection->error);
         }
         
-        $stmt_insert->bind_param('sssssi', $student_id, $name, $email, $course, $year_level, $login_id);
+        $stmt_insert->bind_param('ssssssi', $student_id, $first_name, $last_name, $email, $course, $year_level, $login_id);
         
         if ($stmt_insert->execute()) {
             $_SESSION['message'] = "Profile completed successfully! You can now make reservations.";

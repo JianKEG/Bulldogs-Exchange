@@ -10,8 +10,8 @@
         exit();
     }
     
-    // Get the current s_id (Student_Log id) from session
-    $current_s_id = $_SESSION['id'];
+    // Get the current userid (User_Credentials id) from session
+    $current_userid = $_SESSION['id'];
     
     // Retrieve and sanitize inputs
     $firstName = trim($_POST['firstName'] ?? '');
@@ -71,13 +71,13 @@
     }
     
     // Get current student_id before making changes
-    $sql_get_current = "SELECT student_id FROM Student WHERE s_id = ?";
+    $sql_get_current = "SELECT student_id FROM Student WHERE userid = ?";
     $stmt_get_current = $connection->prepare($sql_get_current);
     if (!$stmt_get_current) {
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $connection->error]);
         exit();
     }
-    $stmt_get_current->bind_param('i', $current_s_id);
+    $stmt_get_current->bind_param('i', $current_userid);
     $stmt_get_current->execute();
     $result_get_current = $stmt_get_current->get_result();
     $current_student_id_row = $result_get_current->fetch_assoc();
@@ -104,13 +104,13 @@
     }
     
     // Check if email already exists for different student
-    $sql_check_email = "SELECT s_id FROM Student WHERE email = ? AND s_id != ?";
+    $sql_check_email = "SELECT userid FROM Student WHERE email = ? AND userid != ?";
     $stmt_check_email = $connection->prepare($sql_check_email);
     if (!$stmt_check_email) {
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $connection->error]);
         exit();
     }
-    $stmt_check_email->bind_param('si', $email, $current_s_id);
+    $stmt_check_email->bind_param('si', $email, $current_userid);
     $stmt_check_email->execute();
     $result_check_email = $stmt_check_email->get_result();
     
@@ -147,7 +147,7 @@
         }
         
         // Update student details
-        $sql_update = "UPDATE Student SET student_id = ?, first_name = ?, last_name = ?, email = ?, course = ?, year_level = ? WHERE s_id = ?";
+        $sql_update = "UPDATE Student SET student_id = ?, first_name = ?, last_name = ?, email = ?, course = ?, year_level = ? WHERE userid = ?";
         $stmt_update = $connection->prepare($sql_update);
         
         if (!$stmt_update) {
@@ -155,7 +155,7 @@
             throw new Exception("Database prepare error: " . $connection->error);
         }
         
-        $stmt_update->bind_param('ssssssi', $new_student_id, $firstName, $lastName, $email, $course, $year_level, $current_s_id);
+        $stmt_update->bind_param('ssssssi', $new_student_id, $firstName, $lastName, $email, $course, $year_level, $current_userid);
         
         if (!$stmt_update->execute()) {
             $connection->query("SET FOREIGN_KEY_CHECKS=1");
