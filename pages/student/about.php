@@ -23,50 +23,22 @@
         font-family: 'Poppins', sans-serif;
     }
 </style>
-<h1 class="text-3xl font-semibold text-center mx-auto mt-10">About Us</h1>
-<p class="text-sm text-slate-500 text-center mt-2 max-w-md mx-auto">
-   A system for students to reserve school uniforms and merchandise.
-</p>
-<div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 px-4 md:px-0 py-10">
-    <img class="max-w-sm w-full rounded-xl h-auto"
-        src="../../assets/images/bulldogsLogo.png" alt="Bulldogs Logo" />
-    <div>
-        <h1 class="text-3xl font-semibold">Our Latest features</h1>
-        <p class="text-sm text-slate-500 mt-2">
-            Ship Beautiful Frontends Without the Overhead — Customizable, Scalable and Developer-Friendly UI
-            Components.
-        </p>
-
-        <div class="flex flex-col gap-10 mt-6">
-            <div class="flex items-center gap-4">
-                <div class="size-9 p-2 bg-indigo-50 border border-indigo-200 rounded">
-                    <img src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/flashEmoji.png" alt="">
-                </div>
-                <div>
-                    <h3 class="text-base font-medium text-slate-600">Lightning-Fast Performance</h3>
-                    <p class="text-sm text-slate-500">Built with speed — minimal load times and optimized.</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="size-9 p-2 bg-indigo-50 border border-indigo-200 rounded">
-                    <img src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/colorsEmoji.png" alt="">
-                </div>
-                <div>
-                    <h3 class="text-base font-medium text-slate-600">Beautifully Designed Components</h3>
-                    <p class="text-sm text-slate-500">Modern, pixel-perfect UI components ready for any project.</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="size-9 p-2 bg-indigo-50 border border-indigo-200 rounded">
-                    <img src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/aboutSection/puzzelEmoji.png" alt="">
-                </div>
-                <div>
-                    <h3 class="text-base font-medium text-slate-600">Plug-and-Play Integration</h3>
-                    <p class="text-sm text-slate-500">Simple setup with support for React, Next.js and Tailwind css.</p>
-                </div>
-            </div>
-        </div>
+<h1 class="text-4xl font-bold text-center mx-auto mt-20">About Us</h1>
+    <p class="text-lg text-slate-500 text-center mt-5 max-w-2xl mx-auto">
+        A web-based inventory platform where students can view real-time stock of uniforms/merchandise and secure reservations without going to the physical store.
+    </p>
+    <div class="text-lg text-slate-500 text-center mt-10 max-w-xs mx-auto">
+        <ul>
+            <li>BSCS241A</li>
+            <li>Abrenilla, Alfonso</li>
+            <li>Cabrera, Edrei</li>
+            <li>Clarion, Zairiel</li>
+            <li>Gapatan, Jian</li>
+            <li>Kagahastian, Zet</li>
+        </ul>
     </div>
-</div>
+    <div class="flex items-center justify-center mt-20">
+        <?php include ('../../includes/footer.html'); ?>
+    </div>
 </body>
 </html>

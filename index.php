@@ -19,7 +19,7 @@
     </style>
 
     <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-        <h1 class="text-3xl font-bold text-center mb-4 text-yellow-400">BULLDOGS EXCHANGE</h1>
+        <h1 class="text-3xl font-bold text-center mb-4 text-blue-700">BULLDOGS EXCHANGE</h1>
         <p class="text-center text-gray-400 mb-6">Welcome! Please login to continue.</p>
         
         <?php if (isset($_SESSION['message'])): ?>
