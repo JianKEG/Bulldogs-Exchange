@@ -25,7 +25,7 @@
         <div id="mobile-menu" class="hidden absolute top-15 left-0 z-50 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm lg:hidden">
             <a href="home.php" class="block">Home</a>
             <a href="uniform.php" class="block">Uniforms</a>
-            <a href="about.html" class="block">About</a>
+            <a href="about.php" class="block">About</a>
             <a href="studentProfile.php" class="block">Profile</a>
             <a href="viewReservedItems.php" class="block">Reserved Items</a>
 
@@ -39,7 +39,7 @@
         <div class="hidden lg:flex justify-center ml-10 gap-8 relative z-10">
             <a href="home.php">Home</a>
             <a href="uniform.php">Uniforms</a>
-            <a href="about.html">About</a>
+            <a href="about.php">About</a>
         </div>
 
         <div class="hidden lg:flex items-center justify-center relative z-10"> <!--cart profile-->

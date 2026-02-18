@@ -37,15 +37,11 @@
             }
         ?>
         <h1 class="text-7xl font-bold text-center mx-auto mt-50">Welcome to the Bulldogs Exchange!</h1>
-        <p class="text-lg text-slate-400 text-center mt-2 mx-auto">A system for students to reserve school uniforms and merchandise.</p>
+        <p class="text-lg text-slate-400 text-center mt-2 mx-auto">A system for students to reserve school uniforms.</p>
 
         <div class="flex flex-row gap-4 items-center justify-center min-h-25 w-full p-4">
             <a href="uniform.php" class="flex items-center justify-center px-6 py-2.5 bg-blue-800 text-white font-medium text-sm leading-tight uppercase rounded shadow-md hover:bg-indigo-900 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 ease-in-out decoration-0">
-                Uniforms
-            </a>
-
-            <a href="merchandise.php" class="flex items-center justify-center px-6 py-2.5 bg-amber-400 text-white font-medium text-sm leading-tight uppercase rounded shadow-md hover:bg-amber-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition duration-150 ease-in-out decoration-0">
-                Merchandise
+                Reserve Uniforms
             </a>
         </div>
         <div class="flex items-center justify-center mt-50">  

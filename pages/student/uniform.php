@@ -6,7 +6,7 @@
 
     $page_title = "Uniforms";
 
-    include ('../../includes/student/header.html');
+    include ('../../includes/student/header.php');
     require '../../actions/admin/product/productQuery.php';
 ?>
 

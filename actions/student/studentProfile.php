@@ -15,5 +15,5 @@
         exit();
     }
 
-    include ('../../includes/student/header.html');
+    include ('../../includes/student/header.php');
 ?> 
