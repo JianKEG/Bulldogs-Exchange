@@ -34,22 +34,16 @@
                 unset($_SESSION['message']); 
             }
         ?>
-        <h1 class="text-6xl font-bold text-center mx-auto mt-40">Welcome to the Bulldogs Exchange!</h1>
+        <h1 class="text-7xl font-bold text-center mx-auto mt-50">Welcome to the Bulldogs Exchange!</h1>
         <p class="text-lg text-slate-400 text-center mt-2 mx-auto">A system for students to reserve school uniforms and merchandise.</p>
 
-        <div class="flex flex-row gap-4 items-center justify-center min-h-[100px] w-full p-4">
+        <div class="flex flex-row gap-4 items-center justify-center min-h-25 w-full p-4">
             <a href="uniform.php" class="flex items-center justify-center px-6 py-2.5 bg-blue-800 text-white font-medium text-sm leading-tight uppercase rounded shadow-md hover:bg-indigo-900 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-150 ease-in-out decoration-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-                    Uniforms
+                Uniforms
             </a>
 
             <a href="merchandise.php" class="flex items-center justify-center px-6 py-2.5 bg-amber-400 text-white font-medium text-sm leading-tight uppercase rounded shadow-md hover:bg-amber-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition duration-150 ease-in-out decoration-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                </svg>
-                    Merchandise
+                Merchandise
             </a>
         </div>
         <div class="flex items-center justify-center mt-50">  
