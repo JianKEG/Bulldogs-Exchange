@@ -2,8 +2,8 @@
     if (session_status() === PHP_SESSION_NONE) session_start();
     require_once '../../config/connection.php';
     require_once '../../config/accessController.php';
-
-    include ('../../includes/student/header.html');
+    $page_title = "Student Profile";
+    include ('../../includes/student/header.php');
     require ('../../actions/student/studentProfile.php');
 ?>
 
