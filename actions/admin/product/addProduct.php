@@ -5,8 +5,6 @@
 
     require '../../../config/accessController.php';
     require_once '../../../config/connection.php';
-    error_reporting(E_ERROR | E_PARSE);
-    $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
     if(isset($_POST['createForm'])){
         $target_dir = __DIR__ . "/../../../assets/uploads/";
@@ -20,8 +18,6 @@
         $product_name = $_POST['product_name'];
         $category = $_POST['category'];
         $price = $_POST['price'];
-        $sizes = $_POST['sizes'];
-        $stocks = $_POST['stocks'];
         $image = $fileName;
 
         $insertQuery = "INSERT INTO product (product_name, category, price, image) VALUES ('$product_name', '$category', '$price', '$image')";
@@ -33,12 +29,26 @@
         $row = mysqli_fetch_assoc($result);
         $id = $row['product_id'];
 
-        for ($i = 0; $i < count($sizes); $i++) {
-            $size = $sizes[$i];
-            $stock = $stocks[$i];
-
-            $insertSizeStock = "INSERT INTO product_sizestock (product_id, size, stock_quantity) VALUES ('$id', '$size', '$stock')";
+        if (isset($_POST['total_stock']) && $_POST['total_stock'] !== '') {
+            $total_stock = $_POST['total_stock'];
+            $insertSizeStock = "INSERT INTO Product_SizeStock (product_id, size, stock_quantity) VALUES ('$id', 'No Size', '$total_stock')";
             mysqli_query($connection, $insertSizeStock);
+        } else {
+            $sizes = $_POST['sizes'];
+            $stocks = $_POST['stocks'];
+
+            for ($i = 0; $i < count($sizes); $i++) {
+                $size = $sizes[$i];
+                $stock = $stocks[$i];
+
+                if ($size !== '' && $stock !== '') {
+                    $insertSizeStock = "INSERT INTO Product_SizeStock (product_id, size, stock_quantity) VALUES ('$id', '$size', '$stock')";
+                    mysqli_query($connection, $insertSizeStock);
+                }
+            }
         }
+        
+        header("Location: ../../../pages/admin/products.php");
+        exit();
     }
 ?>

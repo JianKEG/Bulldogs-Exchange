@@ -10,7 +10,7 @@
     $login_id = $_SESSION['id'];
     
     // Check if profile already exists for this login account
-    $sql_check = "SELECT student_id FROM Student WHERE s_id = ?";
+    $sql_check = "SELECT student_id FROM Student WHERE userid = ?";
     $stmt_check = $connection->prepare($sql_check);
     $stmt_check->bind_param('i', $login_id);
     $stmt_check->execute();
@@ -67,9 +67,15 @@
         
         <form id="profileForm" action="../../actions/student/saveProfile.php" method="POST" onsubmit="return validateForm()">
             <div class="form-group">
-                <label for="name">Full Name *</label>
-                <input type="text" id="name" name="name" required>
-                <div class="error" id="nameError">Please enter a valid name (letters and spaces only, 2-100 characters)</div>
+                <label for="first_name">First Name *</label>
+                <input type="text" id="first_name" name="first_name" required>
+                <div class="error" id="firstNameError">Please enter a valid first name (letters and spaces only, 2-100 characters)</div>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name *</label>
+                <input type="text" id="last_name" name="last_name" required>
+                <div class="error" id="lastNameError">Please enter a valid last name (letters and spaces only, 2-100 characters)</div>
             </div>
             
             <div class="form-group">
@@ -126,11 +132,18 @@
             // Reset all errors
             document.querySelectorAll('.error').forEach(e => e.style.display = 'none');
             
-            // Validate Name
-            const name = document.getElementById('name').value.trim();
+            // Validate First Name
+            const firstName = document.getElementById('first_name').value.trim();
             const namePattern = /^[a-zA-Z\s.'-]{2,100}$/;
-            if (!namePattern.test(name)) {
-                document.getElementById('nameError').style.display = 'block';
+            if (!namePattern.test(firstName)) {
+                document.getElementById('firstNameError').style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate Last Name
+            const lastName = document.getElementById('last_name').value.trim();
+            if (!namePattern.test(lastName)) {
+                document.getElementById('lastNameError').style.display = 'block';
                 isValid = false;
             }
             
@@ -168,12 +181,21 @@
         }
         
         // Real-time validation
-        document.getElementById('name').addEventListener('blur', function() {
+        document.getElementById('first_name').addEventListener('blur', function() {
             const namePattern = /^[a-zA-Z\s.'-]{2,100}$/;
             if (!namePattern.test(this.value.trim())) {
-                document.getElementById('nameError').style.display = 'block';
+                document.getElementById('firstNameError').style.display = 'block';
             } else {
-                document.getElementById('nameError').style.display = 'none';
+                document.getElementById('firstNameError').style.display = 'none';
+            }
+        });
+
+        document.getElementById('last_name').addEventListener('blur', function() {
+            const namePattern = /^[a-zA-Z\s.'-]{2,100}$/;
+            if (!namePattern.test(this.value.trim())) {
+                document.getElementById('lastNameError').style.display = 'block';
+            } else {
+                document.getElementById('lastNameError').style.display = 'none';
             }
         });
         

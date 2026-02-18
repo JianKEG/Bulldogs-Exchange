@@ -3,6 +3,9 @@
         session_start();
     }
 
+    require '../../config/accessController.php';
+    require_once '../../config/connection.php';
+
     $page_title = "Home";
     include ('../../includes/student/header.html');
 ?> 

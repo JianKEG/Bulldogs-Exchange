@@ -22,8 +22,8 @@
             <?php include('../../includes/admin/sidebar.html'); ?>
             
             <main id="main-content" class="flex-1 p-8 bg-gray-50 text-center">
-                <div class="mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
-                    <h1 class="text-3xl font-bold text-gray-800">products go here</h1>
+                <div class="mb-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                    <h1 class="text-3xl font-bold text-gray-800">Product Managememt</h1>
                 </div>
 
                 <div class="space-y-4">
@@ -47,18 +47,37 @@
                             </thead>    
 
                             <tbody class="divide-y divide-gray-200">
-                                <?php while($row = mysqli_fetch_array($result)) { ?>
+                                <?php while($row = mysqli_fetch_array($result)) { 
+                                    $sizes = $row['sizes'] ? explode('|', $row['sizes']) : [];
+                                    $stocks = $row['stocks'] ? explode('|', $row['stocks']) : [];
+                                    $hasNoSize = false;
+                                    $noSizeStock = null;
+                                    for ($i = 0; $i < count($sizes); $i++) {
+                                        $size = $sizes[$i];
+                                        if ($size === 'No Size') {
+                                            $hasNoSize = true;
+                                            if(isset($stocks[$i])) {
+                                                $noSizeStock = $stocks[$i];
+                                            } else {
+                                                $noSizeStock = 0;
+                                            }
+                                            
+                                            break;
+                                        }
+                                    }
+                                ?>
                                     <tr class="hover:bg-gray-50">
                                         <td class="px-6 py-4 text-sm font-medium text-gray-900"><?php echo $row['product_name']; ?></td>
                                         <td class="px-6 py-4 text-sm text-gray-600"><?php echo $row['category']; ?></td>
                                         <td class="px-6 py-4 text-sm text-gray-900">₱<?php echo $row['price']; ?></td>
 
                                         <td class="px-6 py-4 text-sm">
+                                            <?php if ($hasNoSize): ?>
+                                                <span class="text-gray-500">N/A</span>
+                                            <?php else: ?>
                                             <select name="selected_size" id="size-select-<?php echo $row['product_id']; ?>" class="size-dropdown rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200" onchange="updateStock(this, <?php echo $row['product_id']; ?>)">
-                                                <option value="">-- Select Size --</option>
+                                                <option value="all">-- Select Size --</option>
                                                 <?php
-                                                    $sizes = $row['sizes'] ? explode('|', $row['sizes']) : [];
-                                                    $stocks = $row['stocks'] ? explode('|', $row['stocks']) : [];
                                                     $count = min(count($sizes), count($stocks));
                                                     for ($i = 0; $i < $count; $i++) {
                                                         $size = $sizes[$i];
@@ -67,12 +86,31 @@
                                                     <option value="<?php echo $size; ?>" stock="<?php echo $stock; ?>"><?php echo $size; ?></option>
                                                 <?php } ?>
                                             </select>
+                                            <?php endif; ?>
                                         </td>
 
                                         <td class="px-6 py-4 text-sm">
+                                            <?php if ($hasNoSize){ ?>
+                                                <?php 
+                                                    $stockClass = 'bg-gray-100 text-gray-700';
+                                                    if ($noSizeStock !== null) {
+                                                        if ($noSizeStock > 10) {
+                                                            $stockClass = 'bg-green-100 text-green-700';
+                                                        } elseif ($noSizeStock > 0) {
+                                                            $stockClass = 'bg-red-100 text-red-700';
+                                                        } else {
+                                                            $stockClass = 'bg-red-100 text-red-700';
+                                                        }
+                                                    }
+                                                ?>
+                                                <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium <?php echo $stockClass; ?>">
+                                                    <?php echo $noSizeStock !== null && $noSizeStock > 0 ? $noSizeStock . ' units' : 'Out of Stock'; ?>
+                                                </span>
+                                            <?php }else{ ?>
                                             <span id="stock-<?php echo $row['product_id']; ?>" class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">
                                                 --
                                             </span>
+                                            <?php } ?>
                                         </td>
                                         
                                         <td class="px-6 py-4 text-sm">

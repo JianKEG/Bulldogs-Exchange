@@ -40,17 +40,40 @@
                         <input required type="text" name="product_name" placeholder="Product Name" class="w-full rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
                         
                         <label class="block text-left text-sm font-medium text-gray-700">Category</label>
-                        <input required type="text" name="category" placeholder="Category" class="w-full rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
+                        <div class="flex gap-6">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input required type="radio" name="category" value="Uniform" class="w-4 h-4 accent-blue-600">
+                                <span class="text-sm text-gray-700">Uniform</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input required type="radio" name="category" value="Merchandise" class="w-4 h-4 accent-blue-600">
+                                <span class="text-sm text-gray-700">Merchandise</span>
+                            </label>
+                        </div>
                         
                         <label class="block text-left text-sm font-medium text-gray-700">Price</label>
                         <input required type="number" name="price" placeholder="Price" class="w-full rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
                         
-                        <div class="mb-6">
+                        <div id="size-toggle-section" class="mb-4" style="display:none;">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Does this item have sizes?</label>
+                            <div class="flex gap-6 justify-center">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="has_sizes" value="yes" class="w-4 h-4 accent-blue-600" onchange="toggleSizeMode()">
+                                    <span class="text-sm text-gray-700">Yes</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="has_sizes" value="no" class="w-4 h-4 accent-blue-600" onchange="toggleSizeMode()" checked>
+                                    <span class="text-sm text-gray-700">No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-6" id="size-mode-required" style="display:none;">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Available Sizes & Stock</label>
                             
                             <div id="size-container">
                                 <div class="flex gap-2 mb-2 justify-center">
-                                    <select name="sizes[]" class="w-1/2 p-2 border rounded-md">
+                                    <select name="sizes[]" class="w-1/2 p-2 border rounded-md" onchange="updateSizeOptions()">
                                         <option value="">-- Select Size --</option>
                                         <option value="XS">XS</option>
                                         <option value="S">S</option>
@@ -70,6 +93,11 @@
                             <button type="button" onclick="addSizeRow()" class="mt-2 text-sm text-blue-600 hover:underline font-medium cursor-pointer">
                                 + Add Size
                             </button>
+                        </div>
+
+                        <div class="mb-6" id="size-mode-optional" style="display:none;">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Total Stock Quantity</label>
+                            <input type="number" name="total_stock" placeholder="Total Stock" class="w-full rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
                         </div>
 
                         <button type="button" onclick="window.location.href='../../../pages/admin/products.php'" class="inline-flex items-center rounded-lg mt-2 bg-gray-600 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition cursor-pointer">
