@@ -51,7 +51,7 @@
     }
 ?>
 
-<?php include ('../../includes/student/header.html'); ?>
+<?php include ('../../includes/student/header.php'); ?>
 
 <!DOCTYPE html>
 <html>
