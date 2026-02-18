@@ -51,7 +51,7 @@
     }
 ?>
 
-<?php include ('../../includes/student/header.html'); ?>
+<?php include ('../../includes/student/header.php'); ?>
 
 <!DOCTYPE html>
 <html>
@@ -138,7 +138,6 @@
         <?php else: ?>
             <p class="text-gray-500" style="margin: 20px 0;">Your list is empty.</p>
             <a href="uniform.php" class="btn btn-finalize">Go to Uniforms</a>
-            <a href="merchandise.php" class="btn btn-finalize">Go to Merchandise</a>
         <?php endif; ?>
     </div>
 </body>

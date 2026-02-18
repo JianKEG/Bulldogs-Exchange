@@ -5,19 +5,18 @@
 
     require '../../config/accessController.php';
     require '../../config/connection.php';
-    error_reporting(E_ERROR | E_PARSE);
-    $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
     $display = "SELECT 
-                product.product_id, 
-                product.product_name, 
+                product.product_id,
+                product.product_name,
                 product.category, 
                 product.price,
-                GROUP_CONCAT(product_sizestock.size ORDER BY product_sizestock.size SEPARATOR '|') AS sizes,
-                GROUP_CONCAT(product_sizestock.stock_quantity ORDER BY product_sizestock.size SEPARATOR '|') AS stocks
+                product.image,
+                GROUP_CONCAT(Product_SizeStock.size ORDER BY Product_SizeStock.size SEPARATOR '|') AS sizes,
+                GROUP_CONCAT(Product_SizeStock.stock_quantity ORDER BY Product_SizeStock.size SEPARATOR '|') AS stocks
                 FROM product
-                LEFT JOIN product_sizestock ON product.product_id = product_sizestock.product_id
-                GROUP BY product.product_id, product.product_name, product.category, product.price
+                LEFT JOIN Product_SizeStock ON product.product_id = Product_SizeStock.product_id
+                GROUP BY product.product_id, product.product_name, product.category, product.price, product.image
                 ORDER BY product.product_id";
     
     $result = mysqli_query($connection, $display);

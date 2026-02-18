@@ -9,7 +9,7 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $sql = "SELECT * FROM admin WHERE username =? Limit 1";
+        $sql = "SELECT * FROM Admin WHERE username =? Limit 1";
         $stmt = $connection->prepare($sql);
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -17,14 +17,14 @@
         $user = $result->fetch_assoc();
     
         if ($user && hash('md5', $password) == $user['password']) {
-            $_SESSION['id'] = $user['id'];
+            $_SESSION['id'] = $user['admin_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['message'] = "You are now logged in!";
             header('location: ../pages/admin/dashboard.php');
             exit();
         }
 
-        $sql = "SELECT * FROM Student_Log WHERE username =? Limit 1";
+        $sql = "SELECT * FROM User_Credentials WHERE username =? Limit 1";
         $stmt = $connection->prepare($sql);
         $stmt->bind_param('s', $username);
         $stmt->execute();

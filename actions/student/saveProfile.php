@@ -66,7 +66,7 @@
     }
     
     // Check if profile already exists for this login account
-    $sql_check = "SELECT student_id FROM Student WHERE s_id = ?";
+    $sql_check = "SELECT student_id FROM Student WHERE userid = ?";
     $stmt_check = $connection->prepare($sql_check);
     $stmt_check->bind_param('i', $login_id);
     $stmt_check->execute();
@@ -107,7 +107,7 @@
     
     // Insert student details into Student table
     try {
-        $sql_insert = "INSERT INTO Student (student_id, first_name, last_name, email, course, year_level, s_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql_insert = "INSERT INTO Student (student_id, first_name, last_name, email, course, year_level, userid) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt_insert = $connection->prepare($sql_insert);
         
         if (!$stmt_insert) {

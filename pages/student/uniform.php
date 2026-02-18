@@ -2,10 +2,12 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+    require '../../config/accessController.php';
+
     $page_title = "Uniforms";
 
-    include ('../../includes/student/header.html');
-    require '../../config/accessController.php';
+    include ('../../includes/student/header.php');
+    require '../../actions/admin/product/productQuery.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,398 +19,78 @@
     </head>
 
     <body class="bg-white font-sans antialiased text-zinc-900">
+        <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mb-6">Uniforms</h2>
+            <?php 
+                $isAUniform = false;
+                $uniform_rows = [];
 
-        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Uniforms</h2>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <!-- Type A Women's Polo -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/typeAWomen.jpg" alt="Type A Women's Polo" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">Type A Women's Polo</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 560.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-                        
-                        <input type="hidden" name="product_id" value="12">
-                        <input type="hidden" name="price" value="560.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Type A Men's Polo -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/typeAMen.jpg" alt="Type A Men's Polo" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">Type A Men's Polo</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 560.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="11">
-                        <input type="hidden" name="price" value="560.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- PE Shirt -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/peSHIRT.jpg" alt="PE Shirt" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">PE Shirt</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 260.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="2">
-                        <input type="hidden" name="price" value="260.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- NSTP Shirt -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/NSTP.jpg" alt="NSTP Shirt" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">NSTP Shirt</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 260.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="1">
-                        <input type="hidden" name="price" value="260.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- ESS Men Top -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/ESSMen.jpg" alt="ESS Men Top" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">ESS Men Top</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 480.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="3">
-                        <input type="hidden" name="price" value="480.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- ESS Women Top -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/ESSWomen.jpg" alt="ESS Women Top" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">ESS Women Top</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 480.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="4">
-                        <input type="hidden" name="price" value="480.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Psych Men Shirt -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/psychM.jpg" alt="Psych Men Top" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">Psych Men's Top</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 600.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="7">
-                        <input type="hidden" name="price" value="600.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Psych Women Top -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/psychW.jpg" alt="Psych Women Top" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">Psych Women's Top</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 600.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="8">
-                        <input type="hidden" name="price" value="600.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- SHS Type A Women Polo -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/SHSTypeAWomen.jpg" alt="SHS Women Polo" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">SHS Women's Type A Polo</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 560.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="10">
-                        <input type="hidden" name="price" value="560.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- SHS Type A Men Polo -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                    <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                        <img src="../../assets/images/SHSTypeAMen.jpg" alt="SHS Men Polo" class="w-full h-full object-cover mix-blend-multiply">
-                    </div>
-
-                    <div class="px-2.5 mb-4">
-                        <p class="font-medium text-base">SHS Men's Type A Polo</p>
-                        <p class="text-gray-500 text-sm my-1">Uniform</p>
-                        <p class="font-medium mt-2">PHP 560.00</p>
-                    </div>
-
-                    <div class="mt-auto px-2.5 flex flex-col gap-3">
-                        <div class="flex gap-2">
-                            <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                <option value="">Size</option>
-                                <option value="XS">XS</option>
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                        </div>
-
-                        <input type="hidden" name="product_id" value="9">
-                        <input type="hidden" name="price" value="560.00">
-
-                        <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                            Reserve Now
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Tourism Vest -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
+                while ($row = mysqli_fetch_array($result)) {
+                    if ($row['category'] === 'Uniform') {
+                        $isAUniform = true;
+                    }
+                    $uniform_rows[] = $row;
+                }
+            ?>
+            <?php if ($isAUniform): ?>      
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <?php foreach ($uniform_rows as $row) { ?>
+                <?php if ($row['category'] !== 'Uniform') { continue; } ?>
+                <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
+                    <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
                         <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                            <img src="../../assets/images/tourismVest.jpg" alt="Tourism Vest" class="w-full h-full object-cover mix-blend-multiply">
+                            <?php if (!empty($row['image'])) { ?>
+                                <img src="../../assets/uploads/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>" class="w-full h-full object-cover mix-blend-multiply">
+                            <?php } else { ?>
+                                <div class="text-sm text-gray-400">No image</div>
+                            <?php } ?>
                         </div>
 
                         <div class="px-2.5 mb-4">
-                            <p class="font-medium text-base">Tourism Vest</p>
-                            <p class="text-gray-500 text-sm my-1">Uniform</p>
-                            <p class="font-medium mt-2">PHP 560.00</p>
+                            <p class="font-medium text-base"><?php echo $row['product_name']; ?></p>
+                            <p class="text-gray-500 text-sm my-1"><?php echo $row['category']; ?></p>
+                            <?php
+                                $sizes = $row['sizes'] ? explode('|', $row['sizes']) : [];
+                                $stocks = $row['stocks'] ? explode('|', $row['stocks']) : [];
+                                $count = count($sizes);
+                                $total_stock = 0;
+                                for ($i = 0; $i < $count; $i++) {
+                                    $total_stock += (int) $stocks[$i];
+                                }
+                            ?>
+                            <div class="flex justify-between items-center mt-2">
+                                <p class="font-medium">₱<?php echo number_format($row['price'], 2); ?></p>
+                                <p class="text-sm text-gray-600">
+                                    Stock: <span id="stock-display-<?php echo $row['product_id']; ?>" class="<?php echo $total_stock <= 10 ? 'text-red-600 font-semibold' : ''; ?>"><?php echo $total_stock; ?></span>
+                                </p>
+                            </div>
                         </div>
 
                         <div class="mt-auto px-2.5 flex flex-col gap-3">
                             <div class="flex gap-2">
-                                <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
+                                <select name="size" required 
+                                    id="size-select-<?php echo $row['product_id']; ?>"
+                                    class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black"
+                                    onchange="updateStockDisplay(<?php echo $row['product_id']; ?>, <?php echo $total_stock; ?>)">
                                     <option value="">Size</option>
-                                    <option value="XS">XS</option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
+                                    <?php
+                                        for ($i = 0; $i < $count; $i++) {
+                                            $size = $sizes[$i];
+                                            $stock = $stocks[$i];
+                                    ?>
+                                        <option value="<?php echo $size; ?>" 
+                                                data-stock="<?php echo (int) $stock; ?>"
+                                                <?php echo ((int) $stock) <= 0 ? 'disabled' : ''; ?>>
+                                            <?php echo $size; ?>
+                                        </option>
+                                    <?php } ?>
                                 </select>
-                                <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
+                                <input type="number" name="quantity" value="1" min="1" max="3" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
                             </div>
-
-                            <input type="hidden" name="product_id" value="5">
-                            <input type="hidden" name="price" value="560.00">
+                            
+                            <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
+                            <input type="hidden" name="price" value="<?php echo $row['price']; ?>">
+                            <input type="hidden" name="category" value="<?php echo $row['category']; ?>">
 
                             <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
                                 Reserve Now
@@ -416,43 +98,14 @@
                         </div>
                     </form>
                 </div>
-
-            <!-- Tourism Men's Coat -->
-            <div class="group bg-white pb-5 transition-transform duration-200 hover:-translate-y-1">
-                <form action="viewReservedItems.php" method="POST" class="flex flex-col h-full">
-                        <div class="bg-neutral-100 aspect-square flex items-center justify-center overflow-hidden relative mb-3">
-                            <img src="../../assets/images/tourismMCoat.jpg" alt="Tourism Men's Coat" class="w-full h-full object-cover mix-blend-multiply">
-                        </div>
-
-                        <div class="px-2.5 mb-4">
-                            <p class="font-medium text-base">Tourism Men's Coat</p>
-                            <p class="text-gray-500 text-sm my-1">Uniform</p>
-                            <p class="font-medium mt-2">PHP 560.00</p>
-                        </div>
-
-                        <div class="mt-auto px-2.5 flex flex-col gap-3">
-                            <div class="flex gap-2">
-                                <select name="size" required class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black">
-                                    <option value="">Size</option>
-                                    <option value="XS">XS</option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                </select>
-                                <input type="number" name="quantity" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
-                            </div>
-
-                            <input type="hidden" name="product_id" value="6">
-                            <input type="hidden" name="price" value="1260.00">
-
-                            <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                                Reserve Now
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            <?php } ?>
+            </div>
+            <?php else: ?>
+            <div class="text-center py-12">
+                <p class="text-gray-500 text-lg">No Products Available</p>
+            </div>
+            <?php endif; ?>
         </div>
-
+        <script src="../../assets/js/displayStock.js"></script>
     </body>
 </html>

@@ -10,7 +10,7 @@
     $login_id = $_SESSION['id'];
     
     // Check if profile already exists for this login account
-    $sql_check = "SELECT student_id FROM Student WHERE s_id = ?";
+    $sql_check = "SELECT student_id FROM Student WHERE userid = ?";
     $stmt_check = $connection->prepare($sql_check);
     $stmt_check->bind_param('i', $login_id);
     $stmt_check->execute();
@@ -23,7 +23,7 @@
     }
 ?>
 
-<?php include ('../../includes/student/header.html'); ?>
+<?php include ('../../includes/student/header.php'); ?>
 
 <!DOCTYPE html>
 <html>
