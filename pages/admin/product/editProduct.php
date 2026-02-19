@@ -3,6 +3,7 @@
         session_start();
     }
     
+    require '../../../config/accessControllerActions.php';
     $page_title = "Edit Products";
     include('../../../includes/admin/product/header.html');
 

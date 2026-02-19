@@ -1,6 +1,7 @@
 <?php 
     require_once('../../config/connection.php');
     
+    
     $user_id = $_SESSION['id'];
     $sql = "SELECT * FROM Student WHERE userid = ?";
     $stmt = $connection->prepare($sql);

@@ -1,9 +1,12 @@
 <?php
+
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+    require '../../config/accessControllerActions.php';
     
     require_once '../../config/connection.php';
+    
 
     $display_reservations = "SELECT 
         r.reservation_id,

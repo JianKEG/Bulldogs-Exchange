@@ -1,4 +1,4 @@
-<?php 
+<?php
     $status_label = $row['status'];
     $status = $row['status'];
 

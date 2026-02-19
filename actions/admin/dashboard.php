@@ -1,5 +1,7 @@
 <?php 
+    
     require '../../config/connection.php';
+    require '../../config/accessController.php';
 
     $page_title = "Dashboard";
     

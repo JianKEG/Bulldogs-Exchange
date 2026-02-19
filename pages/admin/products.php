@@ -3,6 +3,8 @@
         session_start();
     }
     
+    require '../../config/accessController.php';
+    
     $page_title = "Products";
     include('../../includes/admin/header.html');
 
@@ -30,6 +32,7 @@
                     <script>
                         alert("<?php echo $_SESSION['error']; ?>");
                     </script>
+                    <?php unset($_SESSION['error']); ?>
                 <?php endif; ?>
 
                 <div class="space-y-4">

@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-    require '../../../config/accessController.php';
+    require '../../../config/accessControllerActions.php';
     require_once '../../../config/connection.php';
 
     $product_id = $_GET['id'];

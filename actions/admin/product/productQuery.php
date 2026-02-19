@@ -3,7 +3,7 @@
         session_start();
     }
 
-    require '../../config/accessController.php';
+    require '../../config/accessControllerActions.php';
     require '../../config/connection.php';
 
     $display = "SELECT 

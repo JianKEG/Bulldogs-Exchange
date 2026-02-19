@@ -10,11 +10,30 @@
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
+    
+    $user = $_SESSION['username'];
+    $cookie_name = 'cart_' . $user;
+
 
     if(isset($_POST['reserve_submit'])){
         $product_id = $_POST['product_id'];
         $size = $_POST['size'];
         $quantity = (int)$_POST['quantity'];
+
+        // Check total quantity of this product already in cart
+        $existingQuantity = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            if ($item['product_id'] == $product_id) {
+                $existingQuantity += $item['quantity'];
+            }
+        }
+
+        // Check if adding new quantity would exceed limit of 3
+        if ($existingQuantity + $quantity > 3) {
+            $_SESSION['error'] = "You can only reserve up to 3 items of the same product. You already have " . $existingQuantity . " item(s) reserved.";
+            header("Location: viewReservedItems.php");
+            exit();
+        }
 
         $cart_key = $product_id . "_" . $size;
 
@@ -75,6 +94,13 @@
     
    <body class="bg-white font-sans antialiased text-zinc-900">
     <div class="cart-container"> 
+        <?php if (isset($_SESSION['error'])): ?>
+            <div style="padding: 15px; margin-bottom: 20px; border-radius: 8px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">
+                <strong>Error:</strong> <?= htmlspecialchars($_SESSION['error']); ?>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
         <?php if (isset($_SESSION['message'])): ?>
             <div style="padding: 15px; margin-bottom: 20px; border-radius: 8px; 
                 <?= (strpos($_SESSION['message'], 'successful') !== false || strpos($_SESSION['message'], 'added') !== false) 
