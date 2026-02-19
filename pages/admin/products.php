@@ -26,6 +26,12 @@
                     <h1 class="text-3xl font-bold text-gray-800">Product Managememt</h1>
                 </div>
 
+                <?php if (isset($_SESSION['error'])): ?>
+                    <script>
+                        alert("<?php echo $_SESSION['error']; ?>");
+                    </script>
+                <?php endif; ?>
+
                 <div class="space-y-4">
                     <div class="ml-155">
                         <a href="../../pages/admin/product/addProduct.php" class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 pl-2 text-sm font-medium text-white hover:bg-blue-700 transition">
@@ -75,15 +81,23 @@
                                             <?php if ($hasNoSize): ?>
                                                 <span class="text-gray-500">N/A</span>
                                             <?php else: ?>
-                                            <select name="selected_size" id="size-select-<?php echo $row['product_id']; ?>" class="size-dropdown rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200" onchange="updateStock(this, <?php echo $row['product_id']; ?>)">
-                                                <option value="all">-- Select Size --</option>
+                                            <?php 
+                                                $totalStock = 0;
+                                                $count = min(count($sizes), count($stocks));
+                                                for ($i = 0; $i < $count; $i++) {
+                                                    $totalStock += intval($stocks[$i]);
+                                                }
+                                                $allOutOfStock = ($count > 0 && $totalStock == 0);
+                                            ?>
+                                            <select name="selected_size" id="size-select-<?php echo $row['product_id']; ?>" class="size-dropdown rounded-lg border-gray-300 border px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200" onchange="updateStock(this, <?php echo $row['product_id']; ?>)" <?php echo $allOutOfStock ? 'disabled' : ''; ?>>
+                                                <option value="all"><?php echo $allOutOfStock ? 'Out of Stock' : '-- Select Size --'; ?></option>
                                                 <?php
                                                     $count = min(count($sizes), count($stocks));
                                                     for ($i = 0; $i < $count; $i++) {
                                                         $size = $sizes[$i];
                                                         $stock = $stocks[$i];
                                                 ?>
-                                                    <option value="<?php echo $size; ?>" stock="<?php echo $stock; ?>"><?php echo $size; ?></option>
+                                                    <option value="<?php echo $size; ?>" stock="<?php echo $stock; ?>" <?php echo $stock == 0 ? 'disabled' : ''; ?>><?php echo $size; ?></option>
                                                 <?php } ?>
                                             </select>
                                             <?php endif; ?>
@@ -107,8 +121,23 @@
                                                     <?php echo $noSizeStock !== null && $noSizeStock > 0 ? $noSizeStock . ' units' : 'Out of Stock'; ?>
                                                 </span>
                                             <?php }else{ ?>
-                                            <span id="stock-<?php echo $row['product_id']; ?>" class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700">
-                                                --
+                                            <?php 
+                                                $totalStock = 0;
+                                                $count = min(count($sizes), count($stocks));
+                                                for ($i = 0; $i < $count; $i++) {
+                                                    $totalStock += intval($stocks[$i]);
+                                                }
+                                                $stockClass = 'bg-gray-100 text-gray-700';
+                                                if ($totalStock > 10) {
+                                                    $stockClass = 'bg-green-100 text-green-700';
+                                                } elseif ($totalStock > 0) {
+                                                    $stockClass = 'bg-red-100 text-red-700';
+                                                } else {
+                                                    $stockClass = 'bg-red-100 text-red-700';
+                                                }
+                                            ?>
+                                            <span id="stock-<?php echo $row['product_id']; ?>" class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium <?php echo $stockClass; ?>">
+                                                <?php echo $totalStock > 0 ? $totalStock . ' units' : 'Out of Stock'; ?>
                                             </span>
                                             <?php } ?>
                                         </td>
