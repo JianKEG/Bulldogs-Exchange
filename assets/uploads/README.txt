@@ -1,1 +1,1 @@
-product images go here
+uploaded product images go here, must add product via admin panel
