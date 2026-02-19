@@ -52,10 +52,32 @@
                             <?php
                                 $sizes = $row['sizes'] ? explode('|', $row['sizes']) : [];
                                 $stocks = $row['stocks'] ? explode('|', $row['stocks']) : [];
-                                $count = count($sizes);
+                                
+                                $filtered_sizes = [];
+                                $filtered_stocks = [];
+                                $max_count = max(count($sizes), count($stocks));
+                                for ($i = 0; $i < $max_count; $i++) {
+                                    if (isset($sizes[$i])) {
+                                        $size = trim($sizes[$i]);
+                                    } else {
+                                        $size = '';
+                                    }
+                                    if (isset($stocks[$i])) {
+                                        $stock = trim($stocks[$i]);
+                                    } else {
+                                        $stock = '';
+                                    }
+                                    
+                                    if (!empty($size)) {
+                                        $filtered_sizes[] = $size;
+                                        $filtered_stocks[] = (int) $stock;
+                                    }
+                                }
+                              
+                                $count = count($filtered_sizes);
                                 $total_stock = 0;
                                 for ($i = 0; $i < $count; $i++) {
-                                    $total_stock += (int) $stocks[$i];
+                                    $total_stock += $filtered_stocks[$i];
                                 }
                             ?>
                             <div class="flex justify-between items-center mt-2">
@@ -68,32 +90,33 @@
 
                         <div class="mt-auto px-2.5 flex flex-col gap-3">
                             <div class="flex gap-2">
-                                <select name="size" required 
+                                <select name="size" required
                                     id="size-select-<?php echo $row['product_id']; ?>"
-                                    class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black"
-                                    onchange="updateStockDisplay(<?php echo $row['product_id']; ?>, <?php echo $total_stock; ?>)">
+                                    class="flex-1 p-2 border border-gray-300 rounded text-sm bg-white focus:outline-none focus:border-black <?php if ($total_stock == 0) { echo 'opacity-50 cursor-not-allowed'; } ?>"
+                                    onchange="updateStockDisplay(<?php echo $row['product_id']; ?>, <?php echo $total_stock; ?>)"
+                                    <?php if ($total_stock == 0) { echo 'disabled'; } ?>>
                                     <option value="">Size</option>
                                     <?php
                                         for ($i = 0; $i < $count; $i++) {
-                                            $size = $sizes[$i];
-                                            $stock = $stocks[$i];
+                                            $size = $filtered_sizes[$i];
+                                            $stock = $filtered_stocks[$i];
                                     ?>
-                                        <option value="<?php echo $size; ?>" 
-                                                data-stock="<?php echo (int) $stock; ?>"
-                                                <?php echo ((int) $stock) <= 0 ? 'disabled' : ''; ?>>
+                                        <option value="<?php echo $size; ?>"
+                                                data-stock="<?php echo $stock; ?>"
+                                                <?php if ($stock <= 0) { echo 'disabled'; } ?>>
                                             <?php echo $size; ?>
                                         </option>
                                     <?php } ?>
                                 </select>
-                                <input type="number" name="quantity" value="1" min="1" max="3" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black">
+                                <input type="number" name="quantity" value="1" min="1" max="3" class="w-16 p-2 border border-gray-300 rounded text-sm text-center focus:outline-none focus:border-black <?php if ($total_stock == 0) { echo 'opacity-50 cursor-not-allowed'; } ?>" <?php if ($total_stock == 0) { echo 'disabled'; } ?>>
                             </div>
-                            
+
                             <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
                             <input type="hidden" name="price" value="<?php echo $row['price']; ?>">
                             <input type="hidden" name="category" value="<?php echo $row['category']; ?>">
 
-                            <button type="submit" name="reserve_submit" class="w-full bg-[#111] text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                                Reserve Now
+                            <button type="submit" name="reserve_submit" class="w-full py-3 rounded-full font-medium transition-colors <?php if ($total_stock == 0) { echo 'bg-gray-400 text-gray-600 cursor-not-allowed'; } else { echo 'bg-[#111] text-white hover:bg-gray-800'; } ?>" <?php if ($total_stock == 0) { echo 'disabled'; } ?>>
+                                <?php if ($total_stock == 0) { echo 'Out of Stock'; } else { echo 'Reserve Now'; } ?>
                             </button>
                         </div>
                     </form>
