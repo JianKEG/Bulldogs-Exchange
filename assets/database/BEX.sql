@@ -7,14 +7,14 @@ CREATE TABLE User_Credentials(
     password VARCHAR(255)
 );
 
-CREATE TABLE Student ( /* hiwalay first name at last name */
-    student_id varchar(12) UNIQUE PRIMARY KEY, /* eto dapat yung student id na mismo ng student like 2024-1022967 */
+CREATE TABLE Student ( 
+    student_id varchar(12) UNIQUE PRIMARY KEY, 
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     email VARCHAR(255),
     course VARCHAR(255),
     year_level VARCHAR(20),
-    userid int UNIQUE, /*eto yung irereference sa id ng student_log*/
+    userid int UNIQUE,
     FOREIGN KEY(userid) REFERENCES User_Credentials(id)
 );
 
@@ -50,9 +50,6 @@ CREATE TABLE Reservation (
     FOREIGN KEY (student_id) REFERENCES Student(student_id),
     FOREIGN KEY (pssid) REFERENCES Product_SizeStock(pssid)
 );
-
-/* sineparate ko yung size and stocks sa product table kasi different size = different stock. gets ba gets ba*/
-
 
 /* passwords are 123 */
 insert into User_Credentials(username, password) value
